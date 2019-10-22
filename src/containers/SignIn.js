@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from "@reach/router";
 import { connect } from 'react-redux';
-import SigninForm from '../components/SigninForm';
+import SignInForm from '../components/SignInForm';
 import { doSignIn } from '../actions';
 
 const Signin = (props) => {
@@ -10,7 +10,7 @@ const Signin = (props) => {
   return (
     <div>
       <Link to='/signup'>signup</Link>
-      <SigninForm submit={signIn} />
+      <SignInForm submit={signIn} />
     </div>
   );
 }

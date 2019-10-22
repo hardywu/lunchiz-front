@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import { Router } from "@reach/router";
 import Home from './containers/Home';
-import Signin from './containers/Signin';
-import Signup from './containers/Signup';
+import SignIn from './containers/SignIn';
+import SignUp from './containers/SignUp';
 import Restaurant from './containers/Restaurant';
 import MyRestaurant from './containers/MyRestaurant';
 import Dashboard from './containers/Dashboard';
@@ -14,8 +14,8 @@ function App() {
     <div className="App">
       <Router>
         <Home path="/" />
-        <Signin path="/signin" />
-        <Signup path="/signup" />
+        <SignIn path="/signin" />
+        <SignUp path="/signup" />
         <Restaurant path="/restaurant" />
         <MyRestaurant path="/myRestaurant" />
         <Dashboard path="/dashboard" />
