@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Router } from "@reach/router";
+import Home from './containers/Home';
+import Signin from './containers/Signin';
+import Signup from './containers/Signup';
+import Restaurant from './containers/Restaurant';
+import MyRestaurant from './containers/MyRestaurant';
+import Dashboard from './containers/Dashboard';
+import ReviewList from './containers/ReviewList';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Home path="/" />
+        <Signin path="/signin" />
+        <Signup path="/signup" />
+        <Restaurant path="/restaurant" />
+        <MyRestaurant path="/myRestaurant" />
+        <Dashboard path="/dashboard" />
+        <ReviewList path="/reviews" />
+      </Router>
     </div>
   );
 }
