@@ -25,7 +25,7 @@ const SignUp = ({ classes, submit, loading, error }) => {
   const submitHandler = e => {
     e.preventDefault()
     if (password !== passwordConfirm) return;
-    submit({email: email.replace(/\s/g, ''), password});
+    submit(email.replace(/\s/g, ''), password);
   }
 
   return (

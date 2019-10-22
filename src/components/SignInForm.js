@@ -19,7 +19,7 @@ const SignIn = ({ classes, submit, loading, error }) => {
   const [email, setEmail] = useState('');
   const submitHandler = e => {
     e.preventDefault()
-    submit({email, password})
+    submit(email, password)
   }
 
   return (
@@ -44,10 +44,11 @@ const SignIn = ({ classes, submit, loading, error }) => {
           id="password"
           name="password"
           label="Password"
-          placeholder="123123"
+          placeholder="Password"
           InputLabelProps={{
             shrink: true,
           }}
+          type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           autoComplete="current-password"

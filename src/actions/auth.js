@@ -32,6 +32,6 @@ export const failedSignUp = (message) => {
   return { type: SIGN_UP_FAILED, message }
 }
 
-export const doSignOut = () => {
+export const signOut = () => {
   return { type: SIGN_OUT }
 }
