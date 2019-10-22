@@ -18,5 +18,5 @@ const Signup = (props) => {
 export default connect(state => ({
   isAuthed: state.auth.signedIn,
 }), (dispatch) => ({
-  signUp: (email, password) => dispatch(doSignUp({email, password})),
+  signUp: (cred) => dispatch(doSignUp(cred)),
 }))(Signup);

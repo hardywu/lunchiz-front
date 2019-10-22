@@ -2,6 +2,7 @@ import {
   delay, select, call, put, takeLeading, all,
 } from 'redux-saga/effects'
 import * as actions from '../actions';
+import { apiService, storeCred } from '../utils';
 
 function* signIn({}) {
   try {
@@ -15,16 +16,23 @@ function* signInSaga() {
   yield takeLeading(actions.SIGN_IN, signIn)
 }
 
-function* signUp({}) {
+function* signUp({ payload: { email, password } }) {
   try {
-    yield put(actions.succedSignUp())
+    const { data, headers } = yield call(apiService.request, {
+      url: '/auth/signup',
+      method: 'post',
+      data: { email, password },
+    });
+    storeCred(headers['authorization']);
+    yield put(actions.succedSignUp(data))
   } catch (e) {
-    yield put(actions.failedSignUp())
+    // const { response: { data }} = e;
+    yield put(actions.failedSignUp('data.errors'))
   }
 }
 
 function* signUpSaga() {
-  yield takeLeading(actions.SIGN_IN, signUp)
+  yield takeLeading(actions.SIGN_UP, signUp)
 }
 
 export default function* () {

@@ -15,20 +15,21 @@ export const succedSignIn = (data) => {
   return { type: SIGN_IN_SUCCED, data }
 }
 
-export const failedSignIn = (payload) => {
-  return { type: SIGN_IN_FAILED, payload }
+export const failedSignIn = (message) => {
+  return { type: SIGN_IN_FAILED, message }
 }
 
 export const doSignUp = (payload) => {
-  return { type: SIGN_IN, payload }
+  return { type: SIGN_UP, payload }
 }
 
 export const succedSignUp = (data) => {
-  return { type: SIGN_IN_SUCCED, data }
+  console.log('up', data)
+  return { type: SIGN_UP_SUCCED, data }
 }
 
-export const failedSignUp = (payload) => {
-  return { type: SIGN_IN_FAILED, payload }
+export const failedSignUp = (message) => {
+  return { type: SIGN_UP_FAILED, message }
 }
 
 export const doSignOut = () => {

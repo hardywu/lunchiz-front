@@ -27,14 +27,14 @@ export default function reducer(state = initState, action) {
         loading: false,
         signedIn: true,
         signInError: null,
-        // user: action.payload.data,
+        user: action.data,
       }
     case SIGN_IN_FAILED:
       return {
         ...state,
         loading: false,
         signedIn: false,
-        signInError: action.payload.message,
+        signInError: action.message,
       }
     case SIGN_UP:
       return {
@@ -48,13 +48,13 @@ export default function reducer(state = initState, action) {
         loading: false,
         signedIn: true,
         signUpError: null,
-        user: action.payload.data,
+        user: action.data,
       }
     case SIGN_UP_FAILED:
       return {
         ...state,
         loading: false,
-        signUpError: action.payload.message,
+        signUpError: action.message,
       }
     case SIGN_OUT:
       return {
