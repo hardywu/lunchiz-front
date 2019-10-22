@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from "@reach/router";
+import { connect } from 'react-redux';
 import Navbar from '../components/Navbar';
 
 const Home = (props) => {
@@ -16,4 +17,6 @@ const Home = (props) => {
   }
 }
 
-export default Home;
+export default connect(state => ({
+  isAuthed: state.auth.signedIn,
+}))(Home);
