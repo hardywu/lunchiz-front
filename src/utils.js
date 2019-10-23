@@ -62,11 +62,9 @@ export const parseJsonApi = (body) => {
   }
 
   if (included) {
-    included.forEach(record => {
-      resources[recordId(record)] = parseDataObject(record);
-    })
+    parseJsonApi({ data: included });
   }
 
   Object.assign(globalRecords, resources);
-  return resources;
+  return Object.values(resources);
 }

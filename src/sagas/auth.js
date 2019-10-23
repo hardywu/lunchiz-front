@@ -1,8 +1,10 @@
 import {
-  delay, select, call, put, takeLeading, all,
+  call, put, takeLeading, all,
 } from 'redux-saga/effects'
 import * as actions from '../actions';
-import { apiService, storeCred, removeCred } from '../utils';
+import {
+  apiService, storeCred, removeCred, parseJsonApi, recordId, globalRecords
+} from '../utils';
 
 function* signIn({ payload: { email, password } }) {
   try {
@@ -12,7 +14,7 @@ function* signIn({ payload: { email, password } }) {
       data: { email, password },
     });
     storeCred(headers['authorization']);
-    yield put(actions.succedSignIn(data))
+    yield put(actions.succedSignIn(parseJsonApi(data)));
   } catch (e) {
     yield put(actions.failedSignIn('err'))
   }
@@ -26,7 +28,7 @@ function* signUp({ payload: { email, password } }) {
       data: { email, password },
     });
     storeCred(headers['authorization']);
-    yield put(actions.succedSignUp(data))
+    yield put(actions.succedSignUp(parseJsonApi(data)));
   } catch (e) {
     // const { response: { data }} = e;
     yield put(actions.failedSignUp('data.errors'))

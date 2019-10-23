@@ -36,9 +36,7 @@ function* fetchRestaurantList({ params }) {
       method: 'get',
       params,
     });
-    parseJsonApi(data);
-    yield put(actions.succedFetchRestaurantList(
-      recordId(data.data).map(id => globalRecords[id]), data.meta));
+    yield put(actions.succedFetchRestaurantList(parseJsonApi(data), data.meta));
   } catch (e) {
     yield put(actions.failedFetchRestaurantList('err'))
   }
