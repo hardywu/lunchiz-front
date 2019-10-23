@@ -3,6 +3,7 @@ import { Redirect } from "@reach/router";
 import { connect } from 'react-redux';
 import Navbar from '../components/Navbar';
 import { signOut } from '../actions';
+import RestaurantList from './RestaurantList';
 
 const Home = (props) => {
   const { isAuthed, signOut } = props
@@ -12,7 +13,7 @@ const Home = (props) => {
     return (
       <div>
         <Navbar signOut={signOut} />
-        Home
+        <RestaurantList />
       </div>
     );
   }

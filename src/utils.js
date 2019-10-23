@@ -14,8 +14,8 @@ export const apiService = axios.create({
   baseURL: process.env.REACT_APP_API_HOST || 'http://localhost:4000',
 });
 
-apiService.defaults.headers.common['Authorization'] = localStorage.
-  getItem('Authorization');
+apiService.defaults.headers.common['Authorization'] = localStorage
+  .getItem('Authorization');
 
 export const removeCred = () => {
   localStorage.removeItem('Authorization');
@@ -25,4 +25,48 @@ export const removeCred = () => {
 export const storeCred = (token) => {
   apiService.defaults.headers.common['Authorization'] = token
   localStorage.setItem('Authorization', token);
+}
+
+export const globalRecords = {};
+
+export const recordId = record => {
+  if (Array.isArray(record)) {
+    return record.map(rec => recordId(rec))
+  } else {
+    return `${record.type}_${record.id}`
+  }
+}
+
+export const parseDataObject = (data) => {
+  let resource = {};
+  resource.id = data.id;
+  resource.type = data.type;
+  data && Object.assign(resource, data.attributes);
+  if (data && data.relationships) {
+    Object.keys(data.relationships).forEach(name => {
+      resource[name] = recordId(data.relationships[name].data)
+    });
+  }
+  return resource;
+}
+
+export const parseJsonApi = (body) => {
+  const { included, data } = body;
+  let resources = {};
+  if (Array.isArray(data)) {
+    data.forEach(record => {
+      resources[recordId(record)] = parseDataObject(record);
+    })
+  } else {
+    resources[recordId(data)] = parseDataObject(data);
+  }
+
+  if (included) {
+    included.forEach(record => {
+      resources[recordId(record)] = parseDataObject(record);
+    })
+  }
+
+  Object.assign(globalRecords, resources);
+  return resources;
 }
