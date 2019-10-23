@@ -6,13 +6,13 @@ import {
 } from '../actions';
 
 export const initState = {
-  reviewList: null,
+  idList: null,
   createLoading: false,
   fetchListLoading: false,
   fetchLoading: false,
   createError: null,
   fetchError: null,
-  reviewListTotal: 0,
+  listTotal: 0,
   fetchListError: null,
 }
 
@@ -63,8 +63,8 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         fetchListLoading: false,
-        reviewList: action.data,
-        reviewListTotal: action.meta.total,
+        idList: action.data,
+        listTotal: action.meta.total,
       }
     case FETCH_REVIEW_LIST_FAILED:
       return {

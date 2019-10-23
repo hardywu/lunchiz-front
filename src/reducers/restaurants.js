@@ -6,14 +6,13 @@ import {
 } from '../actions';
 
 export const initState = {
-  restaurantList: null,
-  restaurant: null,
+  idList: null,
   createLoading: false,
   fetchListLoading: false,
   fetchLoading: false,
   createError: null,
   fetchError: null,
-  restaurantListTotal: 0,
+  listTotal: 0,
   fetchListError: null,
 }
 
@@ -46,7 +45,6 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         fetchLoading: false,
-        restaurant: action.data,
       }
     case FETCH_RESTAURANT_FAILED:
       return {
@@ -64,8 +62,8 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         fetchListLoading: false,
-        restaurantList: action.data,
-        restaurantListTotal: action.meta.total,
+        idList: action.data,
+        listTotal: action.meta.total,
       }
     case FETCH_RESTAURANT_LIST_FAILED:
       return {

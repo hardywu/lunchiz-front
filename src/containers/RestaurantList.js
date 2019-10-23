@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import { doFetchRestaurantList } from '../actions';
+import { globalRecords } from '../utils';
 
 const RestaurantList = (props) => {
   const [[minRate, maxRate], setRateRange] = React.useState([0, 5]);
@@ -70,8 +71,9 @@ const RestaurantList = (props) => {
 }
 
 export default connect(state => ({
-  restaurants: state.restaurants.restaurantList,
-  total: state.restaurants.restaurantListTotal || 0,
+  restaurants: state.restaurants.idList &&
+    state.restaurants.idList.map(id => globalRecords[id]),
+  total: state.restaurants.listTotal || 0,
 }), (dispatch) => ({
   fetchList: (params) => dispatch(doFetchRestaurantList(params)),
 }))(RestaurantList);

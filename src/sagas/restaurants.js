@@ -23,7 +23,7 @@ function* fetchRestaurant({ id }) {
       url: `/stores/${id}`,
       method: 'get',
     });
-    yield put(actions.succedFetchRestaurant(data))
+    yield put(actions.succedFetchRestaurant(parseJsonApi(data)));
   } catch (e) {
     yield put(actions.failedFetchRestaurant('err'))
   }

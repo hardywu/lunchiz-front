@@ -20,8 +20,8 @@ const Restaurant = (props) => {
       </div>
       <Router>
         <ReviewList path="/"  storeId={id} />
-        <ReviewList path="/highestReviews" order={-1} storeId={id} />
-        <ReviewList path="/lowestReviews" order={1} storeId={id} />
+        <ReviewList path="/highestReviews" orderByRate='desc' storeId={id} />
+        <ReviewList path="/lowestReviews" orderByRate='asc' storeId={id} />
       </Router>
     </div>
   );

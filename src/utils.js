@@ -57,7 +57,6 @@ export const parseJsonApi = ({ included, data }) => {
   if (Array.isArray(data)) {
     return data.map(record => parseJsonApi({ data: record }));
   }
-  const resource = parseDataObject(data);
-  globalRecords[recordId(data)] = resource;
-  return resource;
+  globalRecords[recordId(data)] = parseDataObject(data);
+  return recordId(data);
 }
