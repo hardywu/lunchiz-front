@@ -5,9 +5,8 @@ import Home from './containers/Home';
 import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import Restaurant from './containers/Restaurant';
-import MyRestaurant from './containers/MyRestaurant';
 import Dashboard from './containers/Dashboard';
-import ReviewList from './containers/ReviewList';
+import Admin from './containers/Admin';
 
 function App() {
   return (
@@ -16,10 +15,9 @@ function App() {
         <Home path="/" />
         <SignIn path="/signin" />
         <SignUp path="/signup" />
-        <Restaurant path="/restaurant" />
-        <MyRestaurant path="/myRestaurant" />
-        <Dashboard path="/dashboard" />
-        <ReviewList path="/reviews" />
+        <Restaurant path="/restaurant/:id/*" />
+        <Dashboard path="/dashboard/*" />
+        <Admin path="/admin/*" />
       </Router>
     </div>
   );

@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Restaurant = () => {
+const Restaurant = (props) => {
+  const { id } = props
   return (
     <div>
-      Restaurant
+      Restaurant {id}
     </div>
   );
 }

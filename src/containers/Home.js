@@ -17,24 +17,15 @@ const Home = (props) => {
     return <CircularProgress />
   }
 
-  switch (user.role) {
-    case 'Owner':
-      return (
-        <div>
-          <Navbar signOut={signOut} />
-          <RestaurantList ownerId={user.id} />
-        </div>
-      )
-    case 'Admin':
-      return <div>admin</div>;
-    default:
-      return (
-        <div>
-          <Navbar signOut={signOut} />
-          <RestaurantList />
-        </div>
-      );
-  }
+  if (user.role === 'Owner') return <Redirect noThrow to='/dashboard' />;
+  if (user.role === 'Admin') return <Redirect noThrow to='/admin' />;
+
+  return (
+    <div>
+      <Navbar signOut={signOut} />
+      <RestaurantList />
+    </div>
+  );
 }
 
 export default connect(state => ({

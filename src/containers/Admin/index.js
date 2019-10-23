@@ -2,9 +2,10 @@ import React from 'react';
 import { Redirect, Router, Link } from "@reach/router";
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Navbar from '../components/Navbar';
-import { signOut, doFetchMe } from '../actions';
-import RestaurantList from './RestaurantList';
+import Navbar from '../../components/Navbar';
+import { signOut, doFetchMe } from '../../actions';
+import RestaurantList from '../RestaurantList';
+import UserList from './UserList';
 import ReviewList from './ReviewList';
 
 const Admin = (props) => {
@@ -19,17 +20,19 @@ const Admin = (props) => {
   }
 
   if (user.role === 'User') return <Redirect noThrow to='/' />;
-  if (user.role === 'Admin') return <Redirect noThrow to='/admin' />;
+  if (user.role === 'Owner') return <Redirect noThrow to='/dashboard' />;
 
   return (
     <div>
       <div>
         <Navbar signOut={signOut} />
-        <Link to='./'>home</Link>
+        <Link to='./'>admin</Link>
+        <Link to='users'>users</Link>
         <Link to='reviews'>reviews</Link>
       </div>
       <Router>
-        <RestaurantList path="/" ownerId={user.id} />
+        <RestaurantList path="/" />
+        <UserList path="users" />
         <ReviewList path="reviews" />
       </Router>
     </div>
