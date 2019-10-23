@@ -13,7 +13,7 @@ const RestaurantList = (props) => {
   const [[minRate, maxRate], setRateRange] = React.useState([0, 5]);
   const [page, setPage] = React.useState(1);
   const [perPage, setPerPage] = React.useState(20);
-  const { restaurants, fetchList, total } = props;
+  const { restaurants, fetchList, total, ownerId } = props;
   const handleChange = (event, newVal) => setRateRange(newVal)
   const handleChangePage = (event, newPage) => setPage(newPage)
   const handleChangeRowsPerPage = (event) => {
@@ -21,7 +21,7 @@ const RestaurantList = (props) => {
     setPage(1)
   }
   React.useEffect(
-    () => { fetchList({minRate, maxRate, page, perPage}) },
+    () => { fetchList({minRate, maxRate, page, perPage, ownerId}) },
     [minRate, maxRate, page, perPage, fetchList]
   )
   return (

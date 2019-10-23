@@ -7,22 +7,22 @@ import { signOut, doFetchMe } from '../actions';
 import RestaurantList from './RestaurantList';
 
 const Home = (props) => {
-  const { isAuthed, role, signOut, fetchMe } = props
+  const { isAuthed, user, signOut, fetchMe } = props
   if (!isAuthed) {
     return <Redirect noThrow to='/signin' />;
   }
 
-  if (!role) {
+  if (!user) {
     fetchMe();
     return <CircularProgress />
   }
 
-  switch (role) {
+  switch (user.role) {
     case 'Owner':
       return (
         <div>
           <Navbar signOut={signOut} />
-          <RestaurantList />
+          <RestaurantList ownerId={user.id} />
         </div>
       )
     case 'Admin':
@@ -39,7 +39,7 @@ const Home = (props) => {
 
 export default connect(state => ({
   isAuthed: state.auth.signedIn,
-  role: state.auth.user && state.auth.user.role,
+  user: state.auth.user,
 }), (dispatch) => ({
   signOut: () => dispatch(signOut()),
   fetchMe: () => dispatch(doFetchMe()),
