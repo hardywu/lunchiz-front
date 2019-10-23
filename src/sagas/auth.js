@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, storeCred, removeCred, parseJsonApi, recordId, globalRecords
+  apiService, storeCred, removeCred, parseJsonApi,
 } from '../utils';
 
 function* signIn({ payload: { email, password } }) {
@@ -35,6 +35,19 @@ function* signUp({ payload: { email, password } }) {
   }
 }
 
+function* fetchMe() {
+  try {
+    const { data } = yield call(apiService.request, {
+      url: '/auth/me',
+      method: 'get',
+    });
+    yield put(actions.succedFetchMe(parseJsonApi(data)));
+  } catch (e) {
+    removeCred();
+    yield put(actions.failedFetchMe('data.errors'))
+  }
+}
+
 function* signInSaga() {
   yield takeLeading(actions.SIGN_IN, signIn)
 }
@@ -47,6 +60,10 @@ function* signOutSaga() {
   yield takeLeading(actions.SIGN_OUT, removeCred)
 }
 
+function* fetchMeSaga() {
+  yield takeLeading(actions.FETCH_ME, fetchMe)
+}
+
 export default function* () {
-  yield all([signInSaga(), signUpSaga(), signOutSaga()])
+  yield all([signInSaga(), signUpSaga(), signOutSaga(), fetchMeSaga()])
 }

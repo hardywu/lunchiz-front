@@ -1,6 +1,7 @@
 import {
   SIGN_IN, SIGN_IN_SUCCED, SIGN_IN_FAILED,
   SIGN_UP, SIGN_UP_SUCCED, SIGN_UP_FAILED,
+  FETCH_ME, FETCH_ME_SUCCED, FETCH_ME_FAILED,
   SIGN_OUT,
 } from '../actions';
 import { isAuthenticated } from '../utils';
@@ -61,6 +62,25 @@ export default function reducer(state = initState, action) {
         ...state,
         signedIn: false,
         user: null,
+      }
+    case FETCH_ME:
+      return {
+        ...state,
+        loading: true,
+      }
+    case FETCH_ME_SUCCED:
+      return {
+        ...state,
+        loading: false,
+        user: action.data,
+      }
+    case FETCH_ME_FAILED:
+      return {
+        ...state,
+        loading: false,
+        signedIn: false,
+        user: null,
+        signInError: action.message,
       }
     default:
       return state;

@@ -2,7 +2,7 @@ import {
   call, put, takeLeading, all,
 } from 'redux-saga/effects'
 import * as actions from '../actions';
-import { apiService, parseJsonApi, recordId, globalRecords } from '../utils';
+import { apiService, parseJsonApi } from '../utils';
 
 function* createRestaurant({ data: { name } }) {
   try {

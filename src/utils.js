@@ -50,21 +50,14 @@ export const parseDataObject = (data) => {
   return resource;
 }
 
-export const parseJsonApi = (body) => {
-  const { included, data } = body;
-  let resources = {};
-  if (Array.isArray(data)) {
-    data.forEach(record => {
-      resources[recordId(record)] = parseDataObject(record);
-    })
-  } else {
-    resources[recordId(data)] = parseDataObject(data);
-  }
-
+export const parseJsonApi = ({ included, data }) => {
   if (included) {
     parseJsonApi({ data: included });
   }
-
-  Object.assign(globalRecords, resources);
-  return Object.values(resources);
+  if (Array.isArray(data)) {
+    return data.map(record => parseJsonApi({ data: record }));
+  }
+  const resource = parseDataObject(data);
+  globalRecords[recordId(data)] = resource;
+  return resource;
 }
