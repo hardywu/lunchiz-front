@@ -47,8 +47,8 @@ export const failedFetchRestaurantList = (message) => {
   return { type: FETCH_RESTAURANT_LIST_FAILED, message }
 }
 
-export const doFetchRestaurant = (data) => {
-  return { type: FETCH_RESTAURANT, data }
+export const doFetchRestaurant = (id) => {
+  return { type: FETCH_RESTAURANT, id }
 }
 
 export const succedFetchRestaurant = (data) => {

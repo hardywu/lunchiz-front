@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from "@reach/router";
 import Slider from '@material-ui/core/Slider';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,7 +23,7 @@ const RestaurantList = (props) => {
   }
   React.useEffect(
     () => { fetchList({minRate, maxRate, page, perPage, ownerId}) },
-    [minRate, maxRate, page, perPage, fetchList]
+    [minRate, maxRate, page, perPage, fetchList, ownerId]
   )
   return (
     <div>
@@ -39,7 +40,9 @@ const RestaurantList = (props) => {
         {
           restaurants && restaurants.map(
             restaurant => (<TableRow key={restaurant.id}>
-              <TableCell>{restaurant.name}</TableCell>
+              <TableCell><Link to={`/restaurant/${restaurant.id}`}>
+                {restaurant.name}
+              </Link></TableCell>
             </TableRow>))
         }
         </TableBody>

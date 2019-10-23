@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { globalRecords } from '../../utils';
+import { doFetchReviewList } from '../../actions';
 
 const ReviewList = () => {
   return (
@@ -8,4 +11,9 @@ const ReviewList = () => {
   );
 }
 
-export default ReviewList;
+export default connect((state, { id }) => ({
+  isAuthed: state.auth.signedIn,
+  restaurant: globalRecords[`store_${id}`],
+}), (dispatch) => ({
+  fetchRestaurant: (id) => dispatch(doFetchReviewList(id)),
+}))(ReviewList);
