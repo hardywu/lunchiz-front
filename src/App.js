@@ -7,6 +7,7 @@ import SignUp from './containers/SignUp';
 import Restaurant from './containers/Restaurant';
 import Dashboard from './containers/Dashboard';
 import Admin from './containers/Admin';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Restaurant path="/restaurant/:storeId/*" />
         <Dashboard path="/dashboard/*" />
         <Admin path="/admin/*" />
+        <NotFound default />
       </Router>
     </div>
   );
