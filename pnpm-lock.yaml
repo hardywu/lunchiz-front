@@ -1,8 +1,10 @@
 dependencies:
   '@material-ui/core': 4.5.1_react-dom@16.10.2+react@16.10.2
   '@material-ui/icons': 4.5.1_39308cd9abdc21fdf3cff7bab06e1917
+  '@material-ui/lab': 4.0.0-alpha.29_39308cd9abdc21fdf3cff7bab06e1917
   '@reach/router': 1.2.1_react-dom@16.10.2+react@16.10.2
   axios: 0.19.0
+  date-fns: 2.0.0-beta.5
   react: 16.10.2
   react-dom: 16.10.2_react@16.10.2
   react-redux: 7.1.1_react@16.10.2+redux@4.0.4
@@ -1730,6 +1732,24 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-YZ/BgJbXX4a0gOuKWb30mBaHaoXRqPanlePam83JQPZ/y4kl+3aW0Wv9tlR70hB5EGAkEJGW5m4ktJwMgxQAeA==
+  /@material-ui/lab/4.0.0-alpha.29_39308cd9abdc21fdf3cff7bab06e1917:
+    dependencies:
+      '@babel/runtime': 7.6.3
+      '@material-ui/core': 4.5.1_react-dom@16.10.2+react@16.10.2
+      '@material-ui/utils': 4.4.0_react-dom@16.10.2+react@16.10.2
+      clsx: 1.0.4
+      prop-types: 15.7.2
+      react: 16.10.2
+      react-dom: 16.10.2_react@16.10.2
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    peerDependencies:
+      '@material-ui/core': ^4.5.0
+      react: ^16.8.0
+      react-dom: ^16.8.0
+    resolution:
+      integrity: sha512-lF8PHp7IkJUvbH8L9IrTCYfMtwMlAFmp0Weoc4kgLJuJMW3JAUQ2NMpyIhy3jcTJjxH/LhK+y6cKYALx2c0O1g==
   /@material-ui/styles/4.5.0_react-dom@16.10.2+react@16.10.2:
     dependencies:
       '@babel/runtime': 7.6.3
@@ -1786,7 +1806,7 @@ packages:
       prop-types: 15.7.2
       react: 16.10.2
       react-dom: 16.10.2_react@16.10.2
-      react-is: 16.10.2
+      react-is: 16.11.0
     dev: false
     engines:
       node: '>=8.0.0'
@@ -3954,6 +3974,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YTWYI9se1P55u58gL5GkQHW4P6VJBJ5iBT+B5a7i2Tjadhv52paJG0qHX4A0OR6/t52odI64KP2YvFpkDOi3eQ==
+  /date-fns/2.0.0-beta.5:
+    dev: false
+    resolution:
+      integrity: sha512-GS5yi964NDFNoja9yOdWFj9T97T67yLrUeJZgddHaVfc/6tHWtX7RXocuubmZkNzrZUZ9BqBOW7jTR5OoWjJ1w==
   /date-now/0.1.4:
     dev: false
     resolution:
@@ -9061,7 +9085,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      react-is: 16.10.2
+      react-is: 16.11.0
     dev: false
     resolution:
       integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9274,6 +9298,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-INBT1QEgtcCCgvccr5/86CfD71fw9EPmDxgiJX4I2Ddr6ZsV6iFXsuby+qWJPtmNuMY0zByTsG4468P7nHuNWA==
+  /react-is/16.11.0:
+    dev: false
+    resolution:
+      integrity: sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
   /react-lifecycles-compat/3.0.4:
     dev: false
     resolution:
@@ -11542,8 +11570,10 @@ packages:
 specifiers:
   '@material-ui/core': ^4.5.1
   '@material-ui/icons': ^4.5.1
+  '@material-ui/lab': ^4.0.0-alpha.29
   '@reach/router': ^1.2.1
   axios: ^0.19.0
+  date-fns: ^2.0.0-beta.5
   react: ^16.10.2
   react-dom: ^16.10.2
   react-redux: ^7.1.1

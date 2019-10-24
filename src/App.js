@@ -15,7 +15,7 @@ function App() {
         <Home path="/" />
         <SignIn path="/signin" />
         <SignUp path="/signup" />
-        <Restaurant path="/restaurant/:id/*" />
+        <Restaurant path="/restaurant/:storeId/*" />
         <Dashboard path="/dashboard/*" />
         <Admin path="/admin/*" />
       </Router>

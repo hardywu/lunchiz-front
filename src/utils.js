@@ -60,3 +60,18 @@ export const parseJsonApi = ({ included, data }) => {
   globalRecords[recordId(data)] = parseDataObject(data);
   return recordId(data);
 }
+
+export const toJsonApi = (resource = {}) => {
+  let obj = {
+    id: resource.id, type: resource.type,
+    attributes: {}, relationships: {}
+  };
+  Object.keys(resource).forEach(key => {
+    if (key.slice(-2) === 'Id') {
+      obj.relationships[key.slice(0, -2)] = { data: { id: resource[key] } };
+    } else if (!(key in ['id', 'type'] )) {
+      obj.attributes[key] = resource[key]
+    }
+  })
+  return { data: obj };
+}

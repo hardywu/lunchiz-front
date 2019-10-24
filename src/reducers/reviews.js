@@ -2,6 +2,7 @@ import {
   CREATE_REVIEW, CREATE_REVIEW_SUCCED, CREATE_REVIEW_FAILED,
   FETCH_REVIEW, FETCH_REVIEW_SUCCED, FETCH_REVIEW_FAILED,
   FETCH_REVIEW_LIST, FETCH_REVIEW_LIST_SUCCED,
+  FETCH_MY_REVIEW, FETCH_MY_REVIEW_SUCCED, FETCH_MY_REVIEW_FAILED,
   FETCH_REVIEW_LIST_FAILED,
 } from '../actions';
 
@@ -10,8 +11,10 @@ export const initState = {
   createLoading: false,
   fetchListLoading: false,
   fetchLoading: false,
+  fetchMineLoading: false,
   createError: null,
   fetchError: null,
+  fetchMineError: null,
   listTotal: 0,
   fetchListError: null,
 }
@@ -45,13 +48,29 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         fetchLoading: false,
-        review: action.data,
       }
     case FETCH_REVIEW_FAILED:
       return {
         ...state,
         fetchLoading: false,
         fetchError: action.message,
+      }
+    case FETCH_MY_REVIEW:
+      return {
+        ...state,
+        fetchMineLoading: true,
+        fetchMineError: null,
+      }
+    case FETCH_MY_REVIEW_SUCCED:
+      return {
+        ...state,
+        fetchMineLoading: false,
+      }
+    case FETCH_MY_REVIEW_FAILED:
+      return {
+        ...state,
+        fetchMineLoading: false,
+        fetchMineError: action.message,
       }
     case FETCH_REVIEW_LIST:
       return {

@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { doFetchReviewList } from '../actions';
 import { globalRecords } from '../utils';
 
-const ReviewList = ({idList, orderByRate, storeId, fetchReviewList}) => {
+const ReviewList = ({storeId, idList, orderByRate, fetchReviewList}) => {
   React.useEffect(
     () => { fetchReviewList({storeId, orderByRate}) },
     [fetchReviewList, storeId, orderByRate])
@@ -21,7 +21,7 @@ const ReviewList = ({idList, orderByRate, storeId, fetchReviewList}) => {
 }
 
 
-export default connect((state, { id }) => ({
+export default connect((state) => ({
   isAuthed: state.auth.signedIn,
   idList: state.reviews.idList,
   total: state.reviews.listTotal || 0,
