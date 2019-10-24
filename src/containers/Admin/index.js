@@ -7,6 +7,7 @@ import { signOut, doFetchMe } from '../../actions';
 import RestaurantList from '../RestaurantList';
 import UserList from './UserList';
 import ReviewList from './ReviewList';
+import EditUser from './EditUser';
 
 const Admin = (props) => {
   const { isAuthed, user, signOut, fetchMe } = props
@@ -33,6 +34,7 @@ const Admin = (props) => {
       <Router>
         <RestaurantList path="/" />
         <UserList path="users" />
+        <EditUser path="users/:userId/edit" />
         <ReviewList path="reviews" />
       </Router>
     </div>

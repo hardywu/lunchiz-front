@@ -37,6 +37,8 @@ export const recordId = record => {
   }
 }
 
+export const idToRecordId = (id, type) => `${type.toLowerCase()}_${id}`;
+
 export const parseDataObject = (data) => {
   let resource = {};
   resource.id = data.id;
