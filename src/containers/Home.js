@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Navbar from '../components/Navbar';
 import { signOut, doFetchMe } from '../actions';
+import { globalRecords } from '../utils';
 import RestaurantList from './RestaurantList';
 
 const Home = (props) => {
@@ -30,7 +31,7 @@ const Home = (props) => {
 
 export default connect(state => ({
   isAuthed: state.auth.signedIn,
-  user: state.auth.user,
+  user: globalRecords[state.auth.user],
 }), (dispatch) => ({
   signOut: () => dispatch(signOut()),
   fetchMe: () => dispatch(doFetchMe()),

@@ -5,7 +5,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Navbar from '../components/Navbar';
 import { signOut, doFetchMe } from '../actions';
 import RestaurantList from './RestaurantList';
-import ReviewList from './ReviewList';
+import PendingReviewList from './PendingReviewList';
+import { globalRecords } from '../utils';
+import CreateRestaurant from './CreateRestaurant';
 
 const Admin = (props) => {
   const { isAuthed, user, signOut, fetchMe } = props
@@ -26,11 +28,13 @@ const Admin = (props) => {
       <div>
         <Navbar signOut={signOut} />
         <Link to='./'>home</Link>
-        <Link to='reviews'>reviews</Link>
+        <Link to='pendingReviews'>pendingReviews</Link>
+        <Link to='createRestaurant'>add my restaurant</Link>
       </div>
       <Router>
         <RestaurantList path="/" ownerId={user.id} />
-        <ReviewList path="reviews" />
+        <PendingReviewList path="pendingReviews" />
+        <CreateRestaurant path='createRestaurant' />
       </Router>
     </div>
   );
@@ -38,7 +42,7 @@ const Admin = (props) => {
 
 export default connect(state => ({
   isAuthed: state.auth.signedIn,
-  user: state.auth.user,
+  user: globalRecords[state.auth.user],
 }), (dispatch) => ({
   signOut: () => dispatch(signOut()),
   fetchMe: () => dispatch(doFetchMe()),

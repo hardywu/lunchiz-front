@@ -45,10 +45,24 @@ function* fetchMyReview({ id }) {
   }
 }
 
-function* fetchReviewList({ params }) {
+function* replyReview({ id, data: rawData }) {
   try {
     const { data } = yield call(apiService.request, {
-      url: '/reviews',
+      url: `/reviews/${id}/reply`,
+      method: 'patch',
+      data: toJsonApi(rawData),
+    });
+    yield put(actions.succedReplyReview(parseJsonApi(data)));
+  } catch (e) {
+    yield put(actions.failedReplyReview('err'))
+  }
+}
+
+function* fetchReviewList({ params }) {
+  try {
+    const param = Object.keys(params).includes('reply') ? '?reply' : '';
+    const { data } = yield call(apiService.request, {
+      url: '/reviews' + param,
       method: 'get',
       params,
     });
@@ -74,6 +88,9 @@ function* fetchMyReviewSaga() {
   yield takeLatest(actions.FETCH_MY_REVIEW, fetchMyReview)
 }
 
+function* replyReviewSaga() {
+  yield takeLeading(actions.REPLY_REVIEW, replyReview)
+}
 
 export default function* () {
   yield all([
@@ -81,5 +98,6 @@ export default function* () {
     fetchReviewSaga(),
     fetchReviewListSaga(),
     fetchMyReviewSaga(),
+    replyReviewSaga(),
   ])
 }

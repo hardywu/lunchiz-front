@@ -13,6 +13,9 @@ export const FETCH_REVIEW_FAILED = 'FETCH_REVIEW_FAILED'
 export const FETCH_MY_REVIEW = 'FETCH_MY_REVIEW'
 export const FETCH_MY_REVIEW_SUCCED = 'FETCH_MY_REVIEW_SUCCED'
 export const FETCH_MY_REVIEW_FAILED = 'FETCH_MY_REVIEW_FAILED'
+export const REPLY_REVIEW = 'REPLY_REVIEW'
+export const REPLY_REVIEW_SUCCED = 'REPLY_REVIEW_SUCCED'
+export const REPLY_REVIEW_FAILED = 'REPLY_REVIEW_FAILED'
 
 export const doCreateReview = (data) => {
   return { type: CREATE_REVIEW, data }
@@ -72,4 +75,16 @@ export const succedFetchMyReview = (data) => {
 
 export const failedFetchMyReview = (message) => {
   return { type: FETCH_MY_REVIEW_FAILED, message }
+}
+
+export const doReplyReview = (id, data) => {
+  return { type: REPLY_REVIEW, id, data }
+}
+
+export const succedReplyReview = (data) => {
+  return { type: REPLY_REVIEW_SUCCED, data }
+}
+
+export const failedReplyReview = (message) => {
+  return { type: REPLY_REVIEW_FAILED, message }
 }

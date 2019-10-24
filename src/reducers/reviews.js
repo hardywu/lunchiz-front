@@ -1,6 +1,7 @@
 import {
   CREATE_REVIEW, CREATE_REVIEW_SUCCED, CREATE_REVIEW_FAILED,
   FETCH_REVIEW, FETCH_REVIEW_SUCCED, FETCH_REVIEW_FAILED,
+  REPLY_REVIEW, REPLY_REVIEW_SUCCED, REPLY_REVIEW_FAILED,
   FETCH_REVIEW_LIST, FETCH_REVIEW_LIST_SUCCED,
   FETCH_MY_REVIEW, FETCH_MY_REVIEW_SUCCED, FETCH_MY_REVIEW_FAILED,
   FETCH_REVIEW_LIST_FAILED,
@@ -90,6 +91,24 @@ export default function reducer(state = initState, action) {
         ...state,
         fetchListLoading: false,
         fetchListError: action.message,
+      }
+    case REPLY_REVIEW:
+      return {
+        ...state,
+        replyLoading: true,
+        replyError: false,
+      }
+    case REPLY_REVIEW_SUCCED:
+      return {
+        ...state,
+        replyLoading: false,
+        idList: state.idList.filter(id => id !== action.data),
+      }
+    case REPLY_REVIEW_FAILED:
+      return {
+        ...state,
+        replyLoading: false,
+        replyError: action.message,
       }
     default:
       return state;

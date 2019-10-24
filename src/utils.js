@@ -69,7 +69,7 @@ export const toJsonApi = (resource = {}) => {
   Object.keys(resource).forEach(key => {
     if (key.slice(-2) === 'Id') {
       obj.relationships[key.slice(0, -2)] = { data: { id: resource[key] } };
-    } else if (!(key in ['id', 'type'] )) {
+    } else if (!(['id', 'type'].includes(key) )) {
       obj.attributes[key] = resource[key]
     }
   })

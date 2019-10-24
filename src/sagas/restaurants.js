@@ -1,17 +1,19 @@
 import {
   call, put, takeLeading, all,
 } from 'redux-saga/effects'
+import { navigate } from "@reach/router";
 import * as actions from '../actions';
-import { apiService, parseJsonApi } from '../utils';
+import { apiService, parseJsonApi, toJsonApi } from '../utils';
 
-function* createRestaurant({ data: { name } }) {
+function* createRestaurant({ data: rawData }) {
   try {
     const { data } = yield call(apiService.request, {
       url: '/stores',
       method: 'post',
-      data: { name },
+      data: toJsonApi(rawData),
     });
-    yield put(actions.succedCreateRestaurant(data))
+    yield put(actions.succedCreateRestaurant(parseJsonApi(data)));
+    yield call(navigate('/dashboard'))
   } catch (e) {
     yield put(actions.failedCreateRestaurant('err'))
   }
