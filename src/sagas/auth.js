@@ -16,7 +16,7 @@ function* signIn({ payload: { email, password } }) {
     storeCred(headers['authorization']);
     yield put(actions.succedSignIn(parseJsonApi(data)));
   } catch (e) {
-    yield put(actions.failedSignIn('err'))
+    yield put(actions.failedSignIn('Username or password is incorrect'))
   }
 }
 
@@ -31,7 +31,7 @@ function* signUp({ payload: { email, password } }) {
     yield put(actions.succedSignUp(parseJsonApi(data)));
   } catch (e) {
     // const { response: { data }} = e;
-    yield put(actions.failedSignUp('data.errors'))
+    yield put(actions.failedSignUp('Can not register with this Email'))
   }
 }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Button, withStyles, Typography, FormControl, FormHelperText, TextField,
 } from '@material-ui/core';
+import { validateEmail } from '../utils';
 
 const styles = theme => ({
   form: {
@@ -14,12 +15,17 @@ const styles = theme => ({
   },
 });
 
-const SignIn = ({ classes, submit, loading, error }) => {
+const SignIn = ({ classes, onSubmit, loading=false, errors=[] }) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [emailInvalid, setEmailInvalid] = useState(false);
+  const emailSetter = (e) => {
+    setEmail(e.target.value);
+    setEmailInvalid(!validateEmail(e.target.value))
+  }
   const submitHandler = e => {
     e.preventDefault()
-    submit(email, password)
+    onSubmit(email, password)
   }
 
   return (
@@ -32,10 +38,11 @@ const SignIn = ({ classes, submit, loading, error }) => {
           label="email"
           placeholder="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={emailSetter}
           InputLabelProps={{
             shrink: true,
           }}
+          error={emailInvalid}
           variant="outlined"
         />
       </FormControl>
@@ -55,16 +62,19 @@ const SignIn = ({ classes, submit, loading, error }) => {
           variant="outlined"
         />
       </FormControl>
-      {error && <Typography color="error">{error}</Typography>}
+      {
+        errors.map(err =>
+          (<Typography color="error" key={err}>{err}</Typography>))
+      }
       <Button
-        disabled={loading}
+        disabled={loading || emailInvalid}
         type="submit"
         fullWidth
         color="primary"
         variant="outlined"
         className={classes.submit}
       >
-        Sign IN
+        SIGN IN
       </Button>
     </form>
   );

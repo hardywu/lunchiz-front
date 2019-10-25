@@ -10,12 +10,12 @@ context('Authentication', () => {
     cy.route({
       method: 'POST',
       url: '/auth/signup',
-      response: { data: { attributes: {} } },
+      response: { data: { id: 32, type: 'User'} },
       headers: { 'authorization': Cypress.env("sampleJWT") },
     }).as('signup')
 
     // enter valid username and password
-    cy.get('[name=email]').type("newEmail")
+    cy.get('[name=email]').type("newEmail@test.io")
     cy.get('[name=password]').type("newPassword")
     cy.get('[name=confirm]').type("newPassword")
     cy.contains('button', 'REGISTER').click()
@@ -39,17 +39,44 @@ context('Authentication', () => {
     cy.location('pathname').should('equal', '/login')
   })
 
-  it('Does not register with invalid email', () => {
+  it('Can not register with invalid email', () => {
     cy.visit('/register')
 
     // enter valid username and password
     cy.get('[name=email]').type("invalid@email")
     cy.get('[name=password]').type(Cypress.env("wrongPassword"))
     cy.get('[name=confirm]').type(Cypress.env("wrongPassword"))
-    cy.contains('button', 'REGISTER').click()
+    cy.contains('button', 'REGISTER').should('be.disabled')
+  })
 
-    // still on /signin page plus an error is displayed
+  it('Can not register with password not confirmed', () => {
+    cy.visit('/register')
+
+    // enter valid username and password
+    cy.get('[name=email]').type("valid@test.io")
+    cy.get('[name=password]').type(Cypress.env("wrongPassword"))
+    cy.get('[name=confirm]').type("notConfirmed")
+    cy.contains('button', 'REGISTER').should('be.disabled')
+  })
+
+  it('Can not register with existing email', () => {
+    cy.visit('/register')
+    cy.server()
+    cy.route('POST', '/auth/signup').as('signup')
+
+    // enter valid username and password
+    cy.get('[name=email]').type(Cypress.env("email"))
+    cy.get('[name=password]').type(Cypress.env("password"))
+    cy.get('[name=confirm]').type(Cypress.env("password"))
+    cy.contains('button', 'REGISTER').click()
+    cy.wait('@signup')
+
+    cy.get('@signup').then(function (xhr) {
+      expect(xhr.status).to.eq(422)
+    })
+
+    // confirm we have logged in successfully
     cy.location('pathname').should('equal', '/register')
-    cy.contains('Username or password is incorrect').should('be.visible')
+    cy.contains('Can not register with this Email').should('be.visible')
   })
 })

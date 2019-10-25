@@ -4,19 +4,20 @@ import { connect } from 'react-redux';
 import { doSignUp } from '../actions';
 import SignUpForm from '../components/SignUpForm';
 
-const Signup = (props) => {
-  const { isAuthed, signUp } = props;
+const Signup = ({ isAuthed, signUp, signUpError }) => {
   if (isAuthed) return <Redirect noThrow to='/' />;
   return (
     <div>
-      <Link to='/signin'>signin</Link>
-      <SignUpForm submit={signUp} />
+      <Link to='/login'>signin</Link>
+      isAuthed: {String(isAuthed)}
+      <SignUpForm onSubmit={signUp} errors={[signUpError]} />
     </div>
   );
 }
 
 export default connect(state => ({
   isAuthed: state.auth.signedIn,
+  signUpError: state.auth.signUpError,
 }), (dispatch) => ({
   signUp: (email, password) => dispatch(doSignUp({email, password})),
 }))(Signup);

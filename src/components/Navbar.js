@@ -8,7 +8,7 @@ const Navbar = (props) => {
       <span>REVIEW</span>
       {reviewsPath && <Link to='/reviews'>reviews</Link>}
       {dashboardPath && <Link to='/dashboard'>dashboard</Link>}
-      <span onClick={signOut}>sign out</span>
+      <span onClick={signOut}>Logout</span>
     </div>
   );
 }

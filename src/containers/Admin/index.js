@@ -15,7 +15,7 @@ import NotFound from '../../components/NotFound';
 const Admin = (props) => {
   const { isAuthed, user, signOut, fetchMe } = props
   if (!isAuthed) {
-    return <Redirect noThrow to='/signin' />;
+    return <Redirect noThrow to='/login' />;
   }
 
   if (!user) {

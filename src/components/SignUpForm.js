@@ -3,6 +3,7 @@ import {
   Button, withStyles, Typography, FormControl, FormHelperText, TextField,
   CircularProgress,
 } from '@material-ui/core';
+import { validateEmail } from '../utils';
 
 const styles = theme => ({
   form: {
@@ -18,14 +19,28 @@ const styles = theme => ({
   },
 });
 
-const SignUp = ({ classes, submit, loading, error }) => {
+const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [emailInvalid, setEmailInvalid] = useState(false);
+  const [pwdNotConfirmed, setPwdNotConfirmed] = useState(false);
+  const emailSetter = (e) => {
+    setEmail(e.target.value);
+    setEmailInvalid(!validateEmail(e.target.value))
+  }
+  const passwordSetter = e => {
+    setPassword(e.target.value);
+    setPwdNotConfirmed(e.target.value !== confirm);
+  }
+  const confirmSetter = e => {
+    setConfirm(e.target.value);
+    setPwdNotConfirmed(password !== e.target.value);
+  }
   const submitHandler = e => {
     e.preventDefault()
-    if (password !== passwordConfirm) return;
-    submit(email.replace(/\s/g, ''), password);
+    if (password !== confirm) return;
+    onSubmit(email.replace(/\s/g, ''), password);
   }
 
   return (
@@ -38,10 +53,11 @@ const SignUp = ({ classes, submit, loading, error }) => {
           label="email"
           placeholder="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={emailSetter}
           InputLabelProps={{
             shrink: true,
           }}
+          error={emailInvalid}
           variant="outlined"
         />
       </FormControl>
@@ -55,42 +71,46 @@ const SignUp = ({ classes, submit, loading, error }) => {
           InputLabelProps={{
             shrink: true,
           }}
-          onChange={e => setPassword(e.target.value)}
+          onChange={passwordSetter}
           autoComplete="current-password"
           variant="outlined"
         />
       </FormControl>
       <FormControl margin="normal" required fullWidth error>
         <TextField
-          id="passwordConfirm"
-          name="passwordConfirm"
+          id="confirm"
+          name="confirm"
           label="Password Confirmation"
           type="password"
           placeholder="123123"
           InputLabelProps={{
             shrink: true,
           }}
-          value={passwordConfirm}
-          onChange={e => setPasswordConfirm(e.target.value)}
+          value={confirm}
+          onChange={confirmSetter}
           autoComplete="current-password"
           variant="outlined"
+          error={pwdNotConfirmed}
         />
         <FormHelperText
-          hidden={!passwordConfirm || password === passwordConfirm}
+          hidden={!pwdNotConfirmed}
         >
           passwords not match
         </FormHelperText>
       </FormControl>
-      {error && <Typography color="error">{error}</Typography>}
+      {
+        errors.map(
+          err => <Typography color="error" key={err}>{err}</Typography>)
+      }
       <Button
-        disabled={loading}
+        disabled={loading || emailInvalid || pwdNotConfirmed}
         type="submit"
         fullWidth
         variant="outlined"
         color="primary"
         className={classes.submit}
       >
-        { loading ? <CircularProgress /> : "Sign Up" }
+        { loading ? <CircularProgress /> : "REGISTER" }
       </Button>
     </form>
   );
