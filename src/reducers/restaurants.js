@@ -1,6 +1,8 @@
 import {
   CREATE_RESTAURANT, CREATE_RESTAURANT_SUCCED, CREATE_RESTAURANT_FAILED,
   FETCH_RESTAURANT, FETCH_RESTAURANT_SUCCED, FETCH_RESTAURANT_FAILED,
+  DELETE_RESTAURANT, DELETE_RESTAURANT_SUCCED, DELETE_RESTAURANT_FAILED,
+  UPDATE_RESTAURANT, UPDATE_RESTAURANT_SUCCED, UPDATE_RESTAURANT_FAILED,
   FETCH_RESTAURANT_LIST, FETCH_RESTAURANT_LIST_SUCCED,
   FETCH_RESTAURANT_LIST_FAILED,
 } from '../actions';
@@ -34,6 +36,40 @@ export default function reducer(state = initState, action) {
         ...state,
         createloading: false,
         createError: action.message,
+      }
+    case DELETE_RESTAURANT:
+      return {
+        ...state,
+        deleteLoading: true,
+        deleteError: null,
+      }
+    case DELETE_RESTAURANT_SUCCED:
+      return {
+        ...state,
+        deleteLoading: false,
+      }
+    case DELETE_RESTAURANT_FAILED:
+      return {
+        ...state,
+        deleteLoading: false,
+        deleteError: action.message,
+      }
+    case UPDATE_RESTAURANT:
+      return {
+        ...state,
+        updateLoading: true,
+        updateError: null,
+      }
+    case UPDATE_RESTAURANT_SUCCED:
+      return {
+        ...state,
+        updateLoading: false,
+      }
+    case UPDATE_RESTAURANT_FAILED:
+      return {
+        ...state,
+        updateLoading: false,
+        updateError: action.message,
       }
     case FETCH_RESTAURANT:
       return {

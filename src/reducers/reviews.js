@@ -1,5 +1,6 @@
 import {
   CREATE_REVIEW, CREATE_REVIEW_SUCCED, CREATE_REVIEW_FAILED,
+  DELETE_REVIEW, DELETE_REVIEW_SUCCED, DELETE_REVIEW_FAILED,
   FETCH_REVIEW, FETCH_REVIEW_SUCCED, FETCH_REVIEW_FAILED,
   REPLY_REVIEW, REPLY_REVIEW_SUCCED, REPLY_REVIEW_FAILED,
   FETCH_REVIEW_LIST, FETCH_REVIEW_LIST_SUCCED,
@@ -109,6 +110,24 @@ export default function reducer(state = initState, action) {
         ...state,
         replyLoading: false,
         replyError: action.message,
+      }
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        deleteLoading: true,
+        deleteError: false,
+      }
+    case DELETE_REVIEW_SUCCED:
+      return {
+        ...state,
+        deleteLoading: false,
+        idList: state.idList.filter(id => id !== action.id),
+      }
+    case DELETE_REVIEW_FAILED:
+      return {
+        ...state,
+        deleteLoading: false,
+        deleteError: action.message,
       }
     default:
       return state;

@@ -20,21 +20,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UserForm = ({
-  submit, loading, error, defaultEmail='', defaultType='User',
+  onSubmit, loading, error, email='', type='User',
 }) => {
   const classes = useStyles();
-  const [email, setEmail] = useState(defaultEmail);
+  const [emailField, setEmail] = useState(email);
+  const [typeField, setType] = useState(type);
   const [password, setPassword] = useState('');
-  const [type, setType] = useState(defaultType);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const submitHandler = e => {
     e.preventDefault()
     if (password !== passwordConfirm) return;
-    const data = {email: email.replace(/\s/g, ''), password, type};
-    if (email === defaultEmail) delete data.email;
-    if (type === defaultType) delete data.type;
-    if (!password) delete data.password;
-    submit && submit(data);
+    let data = {};
+    if (email !== emailField) data.email = emailField;
+    if (type !== typeField) data.type = typeField;
+    if (!!password) data.password = password;
+    onSubmit && onSubmit(data);
   }
 
   return (
@@ -46,8 +46,8 @@ const UserForm = ({
           autoFocus
           label="email"
           placeholder="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          value={emailField}
+          onChange={e => setEmail(e.target.value.replace(/\s/g, ''),)}
           InputLabelProps={{
             shrink: true,
           }}
@@ -93,7 +93,7 @@ const UserForm = ({
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">User Category</FormLabel>
         <RadioGroup
-          aria-label="type" name="type1" value={type}
+          aria-label="type" name="type1" value={typeField}
           onChange={(e) => setType(e.target.value)}>
           <FormControlLabel value="User" control={<Radio />} label="User" />
           <FormControlLabel value="Owner" control={<Radio />} label="Owner" />

@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { navigate } from "@reach/router";
 import NewRestaurantForm from '../components/NewRestaurantForm';
 import { doCreateRestaurant } from '../actions';
 import { globalRecords } from '../utils';
 
-const CreateRestaurant = ({storeId, createReview}) => {
+const CreateRestaurant = ({storeId, createRestaurant}) => {
   return (
-    <NewRestaurantForm onSubmit={createReview} />
+    <NewRestaurantForm onSubmit={createRestaurant} />
     )
 }
 
@@ -14,5 +15,6 @@ export default connect((state, { storeId }) => ({
   isAuthed: state.auth.signedIn,
   restaurant: globalRecords[`store_${storeId}`],
 }), (dispatch, { storeId }) => ({
-  createReview: (data) => dispatch(doCreateRestaurant({...data, storeId})),
+  createRestaurant: (data) => dispatch(
+    doCreateRestaurant({...data, storeId}, () => navigate('/dashboard'))),
 }))(CreateRestaurant);

@@ -1,7 +1,6 @@
 import {
   call, put, takeLeading, all,
 } from 'redux-saga/effects'
-import { navigate } from "@reach/router";
 import * as actions from '../actions';
 import { apiService, parseJsonApi, toJsonApi, idToRecordId } from '../utils';
 
@@ -30,7 +29,7 @@ function* fetchUserList({ params }) {
   }
 }
 
-function* updateUser({ id, data: rawData }) {
+function* updateUser({ id, data: rawData, successCB, errorCB }) {
   try {
     const { data } = yield call(apiService.request, {
       url: `/users/${id}`,
@@ -38,7 +37,7 @@ function* updateUser({ id, data: rawData }) {
       data: toJsonApi(rawData),
     });
     yield put(actions.succedUpdateUser(parseJsonApi(data)));
-    yield call(navigate('/admin/users'));
+    if (successCB) yield call(successCB);
   } catch (e) {
     yield put(actions.failedUpdateUser('err'))
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Router } from "@reach/router";
+import { Router, Redirect } from "@reach/router";
 import Home from './containers/Home';
 import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
@@ -19,6 +19,7 @@ function App() {
         <Restaurant path="/restaurant/:storeId/*" />
         <Dashboard path="/dashboard/*" />
         <Admin path="/admin/*" />
+        <Redirect noThrow from="admin" to="admin/restaurants" />
         <NotFound default />
       </Router>
     </div>

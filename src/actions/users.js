@@ -11,8 +11,8 @@ export const DELETE_USER = 'DELETE_USER'
 export const DELETE_USER_SUCCED = 'DELETE_USER_SUCCED'
 export const DELETE_USER_FAILED = 'DELETE_USER_FAILED'
 
-export const doUpdateUser = (id, data) => {
-  return { type: UPDATE_USER, id, data }
+export const doUpdateUser = (id, data, successCB, errorCB) => {
+  return { type: UPDATE_USER, id, data, successCB, errorCB }
 }
 
 export const succedUpdateUser = (data) => {

@@ -16,9 +16,12 @@ export const FETCH_MY_REVIEW_FAILED = 'FETCH_MY_REVIEW_FAILED'
 export const REPLY_REVIEW = 'REPLY_REVIEW'
 export const REPLY_REVIEW_SUCCED = 'REPLY_REVIEW_SUCCED'
 export const REPLY_REVIEW_FAILED = 'REPLY_REVIEW_FAILED'
+export const DELETE_REVIEW = 'DELETE_REVIEW'
+export const DELETE_REVIEW_SUCCED = 'DELETE_REVIEW_SUCCED'
+export const DELETE_REVIEW_FAILED = 'DELETE_REVIEW_FAILED'
 
-export const doCreateReview = (data) => {
-  return { type: CREATE_REVIEW, data }
+export const doCreateReview = (data, successCB, errorCB) => {
+  return { type: CREATE_REVIEW, data, successCB, errorCB }
 }
 
 export const succedCreateReview = (data) => {
@@ -29,8 +32,8 @@ export const failedCreateReview = (message) => {
   return { type: CREATE_REVIEW_FAILED, message }
 }
 
-export const doUpdateReview = (data) => {
-  return { type: UPDATE_REVIEW, data }
+export const doUpdateReview = (id, data, successCB, errorCB) => {
+  return { type: UPDATE_REVIEW, id, data, successCB, errorCB }
 }
 
 export const succedUpdateReview = (data) => {
@@ -39,6 +42,18 @@ export const succedUpdateReview = (data) => {
 
 export const failedUpdateReview = (message) => {
   return { type: UPDATE_REVIEW_FAILED, message }
+}
+
+export const doDeleteReview = (id) => {
+  return { type: DELETE_REVIEW, id }
+}
+
+export const succedDeleteReview = (id) => {
+  return { type: DELETE_REVIEW_SUCCED, id }
+}
+
+export const failedDeleteReview = (message) => {
+  return { type: DELETE_REVIEW_FAILED, message }
 }
 
 export const doFetchReviewList = (params) => {

@@ -2,10 +2,11 @@ import {
   call, put, takeLeading, all, takeLatest,
 } from 'redux-saga/effects'
 import * as actions from '../actions';
-import { apiService, parseJsonApi, toJsonApi, globalRecords } from '../utils';
-import { navigate } from "@reach/router";
+import {
+  apiService, parseJsonApi, toJsonApi, globalRecords, idToRecordId,
+} from '../utils';
 
-function* createReview({ data: rawData }) {
+function* createReview({ data: rawData, successCB, errorCB }) {
   try {
     const { data } = yield call(apiService.request, {
       url: '/reviews',
@@ -15,7 +16,7 @@ function* createReview({ data: rawData }) {
     const { storeId } = rawData;
     yield put(actions.succedCreateReview(parseJsonApi(data)));
     globalRecords[`store_${storeId}`].myReviewId = data.data.id;
-    yield call(navigate(`/restaurant/${storeId}`))
+    if (successCB) yield call(successCB);
   } catch (e) {
     yield put(actions.failedCreateReview('err'))
   }
@@ -58,6 +59,18 @@ function* replyReview({ id, data: rawData }) {
   }
 }
 
+function* deleteReview({ id }) {
+  try {
+    const { data } = yield call(apiService.request, {
+      url: `/reviews/${id}`,
+      method: 'delete',
+    });
+    yield put(actions.succedDeleteReview(idToRecordId(id, 'review')));
+  } catch (e) {
+    yield put(actions.failedDeleteReview('err'))
+  }
+}
+
 function* fetchReviewList({ params }) {
   try {
     const param = Object.keys(params).includes('reply') ? '?reply' : '';
@@ -71,6 +84,21 @@ function* fetchReviewList({ params }) {
     yield put(actions.failedFetchReviewList('err'))
   }
 }
+
+function* updateReview({ id, data: rawData, successCB, errorCB }) {
+  try {
+    const { data } = yield call(apiService.request, {
+      url: `/reviews/${id}`,
+      method: 'patch',
+      data: toJsonApi(rawData),
+    });
+    yield put(actions.succedUpdateReview(parseJsonApi(data)));
+    if (successCB) yield call(successCB);
+  } catch (e) {
+    yield put(actions.failedUpdateReview('err'))
+  }
+}
+
 
 function* createReviewSaga() {
   yield takeLeading(actions.CREATE_REVIEW, createReview)
@@ -92,6 +120,14 @@ function* replyReviewSaga() {
   yield takeLeading(actions.REPLY_REVIEW, replyReview)
 }
 
+function* deleteReviewSaga() {
+  yield takeLeading(actions.DELETE_REVIEW, deleteReview)
+}
+
+function* updateReviewSaga() {
+  yield takeLeading(actions.UPDATE_REVIEW, updateReview)
+}
+
 export default function* () {
   yield all([
     createReviewSaga(),
@@ -99,5 +135,7 @@ export default function* () {
     fetchReviewListSaga(),
     fetchMyReviewSaga(),
     replyReviewSaga(),
+    deleteReviewSaga(),
+    updateReviewSaga(),
   ])
 }

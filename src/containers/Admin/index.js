@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Navbar from '../../components/Navbar';
 import { signOut, doFetchMe } from '../../actions';
-import RestaurantList from '../RestaurantList';
+import RestaurantList from './RestaurantList';
 import UserList from './UserList';
 import ReviewList from './ReviewList';
 import EditUser from './EditUser';
+import EditReview from './EditReview';
+import EditRestaurant from './EditRestaurant';
+import NotFound from '../../components/NotFound';
 
 const Admin = (props) => {
   const { isAuthed, user, signOut, fetchMe } = props
@@ -32,10 +35,13 @@ const Admin = (props) => {
         <Link to='reviews'>reviews</Link>
       </div>
       <Router>
-        <RestaurantList path="/" />
+        <RestaurantList path="restaurants" />
+        <EditRestaurant path="/restaurants/:restaurantId/edit" />
         <UserList path="users" />
         <EditUser path="users/:userId/edit" />
         <ReviewList path="reviews" />
+        <EditReview path="reviews/:reviewId/edit" />
+        <NotFound default />
       </Router>
     </div>
   );

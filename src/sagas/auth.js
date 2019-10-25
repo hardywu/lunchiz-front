@@ -43,8 +43,9 @@ function* fetchMe() {
     });
     yield put(actions.succedFetchMe(parseJsonApi(data)));
   } catch (e) {
-    removeCred();
+    console.log('auth error', e)
     yield put(actions.failedFetchMe('data.errors'))
+    yield put(actions.signOut())
   }
 }
 
