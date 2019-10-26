@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Button, withStyles, Typography, FormControl, FormHelperText, TextField,
-  CircularProgress,
+  CircularProgress, Radio, RadioGroup, FormControlLabel, FormLabel,
 } from '@material-ui/core';
 import { validateEmail } from '../utils';
 
@@ -23,6 +23,7 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [type, setType] = useState('User');
   const [emailInvalid, setEmailInvalid] = useState(false);
   const [pwdNotConfirmed, setPwdNotConfirmed] = useState(false);
   const emailSetter = (e) => {
@@ -39,8 +40,7 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   }
   const submitHandler = e => {
     e.preventDefault()
-    if (password !== confirm) return;
-    onSubmit(email.replace(/\s/g, ''), password);
+    onSubmit({email: email.replace(/\s/g, ''), password, type});
   }
 
   return (
@@ -102,6 +102,15 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
         errors.map(
           err => <Typography color="error" key={err}>{err}</Typography>)
       }
+      <FormControl component="fieldset" className={classes.formControl}>
+        <FormLabel component="legend">User Category</FormLabel>
+        <RadioGroup
+          aria-label="type" name="type" value={type}
+          onChange={(e) => setType(e.target.value)}>
+          <FormControlLabel value="User" control={<Radio />} label="User" />
+          <FormControlLabel value="Owner" control={<Radio />} label="Owner" />
+        </RadioGroup>
+      </FormControl>
       <Button
         disabled={loading || emailInvalid || pwdNotConfirmed}
         type="submit"

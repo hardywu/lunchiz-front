@@ -20,12 +20,12 @@ function* signIn({ payload: { email, password } }) {
   }
 }
 
-function* signUp({ payload: { email, password } }) {
+function* signUp({ payload: { email, password, type } }) {
   try {
     const { data, headers } = yield call(apiService.request, {
       url: '/auth/signup',
       method: 'post',
-      data: { email, password },
+      data: { email, password, type },
     });
     storeCred(headers['authorization']);
     yield put(actions.succedSignUp(parseJsonApi(data)));

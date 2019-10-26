@@ -9,7 +9,6 @@ const Signup = ({ isAuthed, signUp, signUpError }) => {
   return (
     <div>
       <Link to='/login'>signin</Link>
-      isAuthed: {String(isAuthed)}
       <SignUpForm onSubmit={signUp} errors={[signUpError]} />
     </div>
   );
@@ -19,5 +18,5 @@ export default connect(state => ({
   isAuthed: state.auth.signedIn,
   signUpError: state.auth.signUpError,
 }), (dispatch) => ({
-  signUp: (email, password) => dispatch(doSignUp({email, password})),
+  signUp: (payload) => dispatch(doSignUp(payload)),
 }))(Signup);

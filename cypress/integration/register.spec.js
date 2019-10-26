@@ -4,7 +4,7 @@ context('Authentication', () => {
   beforeEach(() => {
   })
 
-  it('Register using UI', () => {
+  it('Register normal user using UI', () => {
     cy.visit('/register')
     cy.server()
     cy.route({
@@ -37,6 +37,35 @@ context('Authentication', () => {
     // now we can log out
     cy.contains('Logout').click()
     cy.location('pathname').should('equal', '/login')
+  })
+
+  it('Register owner using UI', () => {
+    cy.visit('/register')
+    cy.server()
+    cy.route({
+      method: 'POST',
+      url: '/auth/signup',
+      response: { data:
+        { id: 32, type: 'User', attributes: { role: 'Owner' } },
+      },
+      headers: { 'authorization': Cypress.env("sampleJWT") },
+    }).as('signup')
+
+    // enter valid username and password
+    cy.get('[name=email]').type("newEmail@test.io")
+    cy.get('[name=password]').type("newPassword")
+    cy.get('[name=confirm]').type("newPassword")
+    cy.get('[type="radio"][name="type"][value="Owner"]').check()
+    cy.contains('button', 'REGISTER').click()
+    cy.wait('@signup')
+
+    cy.get('@signup').then(function (xhr) {
+      expect(xhr.status).to.eq(200)
+      expect(xhr.responseHeaders).to.have.property('authorization')
+    })
+
+    // confirm we have logged in successfully
+    cy.location('pathname').should('equal', '/dashboard')
   })
 
   it('Can not register with invalid email', () => {
