@@ -1,0 +1,20 @@
+{
+  "data": {
+    "id": "58",
+    "type": "store",
+    "attributes": {
+      "name": "bbcv",
+      "rateAvg": "0.0",
+      "canReview": true,
+      "myReviewId": null
+    },
+    "relationships": {
+      "owner": {
+        "data": {
+          "id": "72",
+          "type": "owner"
+        }
+      }
+    }
+  }
+}

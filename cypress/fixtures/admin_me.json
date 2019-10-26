@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": "79",
+    "type": "user",
+    "attributes": {
+      "email": "user1@test.io",
+      "role": "Admin"
+    },
+    "relationships": {}
+  }
+}

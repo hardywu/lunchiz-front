@@ -1,0 +1,58 @@
+{
+  "data": [
+    {
+      "id": "32",
+      "type": "review",
+      "attributes": {
+        "rate": 2,
+        "comment": "bvad",
+        "reply": null,
+        "date": "2019-10-25"
+      },
+      "relationships": {
+        "user": {
+          "data": {
+            "id": "71",
+            "type": "user"
+          }
+        },
+        "store": {
+          "data": {
+            "id": "49",
+            "type": "store"
+          }
+        }
+      }
+    },
+    {
+      "id": "31",
+      "type": "review",
+      "attributes": {
+        "rate": 4,
+        "comment": "good",
+        "reply": null,
+        "date": "2019-10-14"
+      },
+      "relationships": {
+        "user": {
+          "data": {
+            "id": "70",
+            "type": "user"
+          }
+        },
+        "store": {
+          "data": {
+            "id": "49",
+            "type": "store"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 2,
+    "page": 1,
+    "size": 2,
+    "limit": 20
+  }
+}

@@ -9,10 +9,27 @@
 // ***********************************************
 //
 //
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
+
+import { base64url, getJWT } from './utils'
+
+Cypress.Commands.add("login", (email, password) => {
+  cy.server()
+  cy.route('GET', '/auth/me', 'fx:me')
+  localStorage.setItem('Authorization', "Bearer " + getJWT())
+})
+
+Cypress.Commands.add("ownerLogin", (email, password) => {
+  cy.server()
+  cy.route('GET', '/auth/me', 'fx:owner_me')
+  localStorage.setItem('Authorization', "Bearer " + getJWT())
+})
+
+Cypress.Commands.add("adminLogin", (email, password) => {
+  cy.server()
+  cy.route('GET', '/auth/me', 'fx:admin_me')
+  localStorage.setItem('Authorization', "Bearer " + getJWT())
+})
+
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 //

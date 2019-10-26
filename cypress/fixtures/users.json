@@ -1,0 +1,162 @@
+{
+  "data": [
+    {
+      "id": "77",
+      "type": "user",
+      "attributes": {
+        "email": "email@testc.io",
+        "role": "User"
+      },
+      "relationships": {}
+    },
+    {
+      "id": "76",
+      "type": "user",
+      "attributes": {
+        "email": "user444@test.io",
+        "role": "User"
+      },
+      "relationships": {}
+    },
+    {
+      "id": "75",
+      "type": "user",
+      "attributes": {
+        "email": "testuser@test.io",
+        "role": "User"
+      },
+      "relationships": {}
+    },
+    {
+      "id": "74",
+      "type": "user",
+      "attributes": {
+        "email": "owner3@test.io",
+        "role": "Owner"
+      },
+      "relationships": {
+        "stores": {
+          "data": []
+        }
+      }
+    },
+    {
+      "id": "73",
+      "type": "user",
+      "attributes": {
+        "email": "owner2@test.io",
+        "role": "Owner"
+      },
+      "relationships": {
+        "stores": {
+          "data": [
+            {
+              "id": "51",
+              "type": "store"
+            },
+            {
+              "id": "50",
+              "type": "store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "72",
+      "type": "user",
+      "attributes": {
+        "email": "owner1@test.io",
+        "role": "Owner"
+      },
+      "relationships": {
+        "stores": {
+          "data": [
+            {
+              "id": "49",
+              "type": "store"
+            },
+            {
+              "id": "58",
+              "type": "store"
+            },
+            {
+              "id": "57",
+              "type": "store"
+            },
+            {
+              "id": "56",
+              "type": "store"
+            },
+            {
+              "id": "55",
+              "type": "store"
+            },
+            {
+              "id": "54",
+              "type": "store"
+            },
+            {
+              "id": "53",
+              "type": "store"
+            },
+            {
+              "id": "52",
+              "type": "store"
+            },
+            {
+              "id": "48",
+              "type": "store"
+            },
+            {
+              "id": "47",
+              "type": "store"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "71",
+      "type": "user",
+      "attributes": {
+        "email": "user3@test.io",
+        "role": "User"
+      },
+      "relationships": {}
+    },
+    {
+      "id": "70",
+      "type": "user",
+      "attributes": {
+        "email": "user2@test.io",
+        "role": "User"
+      },
+      "relationships": {}
+    },
+    {
+      "id": "69",
+      "type": "user",
+      "attributes": {
+        "email": "user1@test.io",
+        "role": "User"
+      },
+      "relationships": {}
+    },
+    {
+      "id": "68",
+      "type": "user",
+      "attributes": {
+        "email": "admin@test.io",
+        "role": "Admin"
+      },
+      "relationships": {}
+    }
+  ],
+  "meta": {
+    "total": 10,
+    "page": 1,
+    "size": 10,
+    "limit": 20
+  }
+}

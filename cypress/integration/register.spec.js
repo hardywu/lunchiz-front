@@ -1,4 +1,5 @@
 /// <reference types="Cypress" />
+import { getJWT } from '../support/utils'
 
 context('Authentication', () => {
   beforeEach(() => {
@@ -11,7 +12,7 @@ context('Authentication', () => {
       method: 'POST',
       url: '/auth/signup',
       response: { data: { id: 32, type: 'User'} },
-      headers: { 'authorization': Cypress.env("sampleJWT") },
+      headers: { 'authorization': getJWT() },
     }).as('signup')
 
     // enter valid username and password
@@ -48,7 +49,7 @@ context('Authentication', () => {
       response: { data:
         { id: 32, type: 'User', attributes: { role: 'Owner' } },
       },
-      headers: { 'authorization': Cypress.env("sampleJWT") },
+      headers: { 'authorization': getJWT() },
     }).as('signup')
 
     // enter valid username and password

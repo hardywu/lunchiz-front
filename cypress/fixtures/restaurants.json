@@ -1,0 +1,202 @@
+{
+  "data": [
+    {
+      "id": "49",
+      "type": "store",
+      "attributes": {
+        "name": "store thre",
+        "rateAvg": "2.66666666666667"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "58",
+      "type": "store",
+      "attributes": {
+        "name": "bbcv",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "57",
+      "type": "store",
+      "attributes": {
+        "name": "nn",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "56",
+      "type": "store",
+      "attributes": {
+        "name": "mm",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "55",
+      "type": "store",
+      "attributes": {
+        "name": "gfghhh",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "54",
+      "type": "store",
+      "attributes": {
+        "name": "b12dcsd",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "53",
+      "type": "store",
+      "attributes": {
+        "name": "b1",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "52",
+      "type": "store",
+      "attributes": {
+        "name": "rr4",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "51",
+      "type": "store",
+      "attributes": {
+        "name": "store five",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "73",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "50",
+      "type": "store",
+      "attributes": {
+        "name": "store four",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "73",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "48",
+      "type": "store",
+      "attributes": {
+        "name": "store two",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    },
+    {
+      "id": "47",
+      "type": "store",
+      "attributes": {
+        "name": "store one",
+        "rateAvg": "0.0"
+      },
+      "relationships": {
+        "owner": {
+          "data": {
+            "id": "72",
+            "type": "owner"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 12,
+    "page": 1,
+    "size": 12,
+    "limit": 20
+  }
+}
