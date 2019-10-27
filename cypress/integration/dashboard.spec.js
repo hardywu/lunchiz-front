@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Homepage', () => {
+context('Dashboard', () => {
   beforeEach(function () {
     cy.server()
     cy.fixture('restaurants').as('restaurantsJSON')
@@ -22,7 +22,7 @@ context('Homepage', () => {
 
   it('list reviews', function () {
     cy.visit('/dashboard')
-    cy.contains('pending').click()
+    cy.contains('Pending').click()
     cy.location('pathname').should('equal', '/dashboard/pendingReviews')
     this.reviewsJSON.data.forEach(rev => {
       cy.contains(rev.attributes.comment.slice(0, 4)).should('be.visible')

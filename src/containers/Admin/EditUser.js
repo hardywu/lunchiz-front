@@ -11,7 +11,9 @@ const EditUser = ({ fetchUser, userId, user, updateUser }) => {
   if (!user) return <CircularProgress />
 
   return (<div>
-      <UserForm email={user.email} type={user.role} onSubmit={updateUser} />
+      <UserForm
+        email={user.email} username={user.username}
+        type={user.role} onSubmit={updateUser} />
     </div>)
 }
 

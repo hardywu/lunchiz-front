@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 import { getJWT } from '../support/utils'
 
-context('Authentication', () => {
+context('Register', () => {
   beforeEach(() => {
   })
 
@@ -17,6 +17,7 @@ context('Authentication', () => {
 
     // enter valid username and password
     cy.get('[name=email]').type("newEmail@test.io")
+    cy.get('[name=username]').type("newUser")
     cy.get('[name=password]').type("newPassword")
     cy.get('[name=confirm]').type("newPassword")
     cy.contains('button', 'REGISTER').click()
@@ -55,6 +56,7 @@ context('Authentication', () => {
     // enter valid username and password
     cy.get('[name=email]').type("newEmail@test.io")
     cy.get('[name=password]').type("newPassword")
+    cy.get('[name=username]').type("newOwner")
     cy.get('[name=confirm]').type("newPassword")
     cy.get('[type="radio"][name="type"][value="Owner"]').check()
     cy.contains('button', 'REGISTER').click()

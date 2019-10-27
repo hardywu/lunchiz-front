@@ -20,11 +20,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UserForm = ({
-  onSubmit, loading, error, email='', type='User',
+  onSubmit, loading, error, email='', type='User', username='',
 }) => {
   const classes = useStyles();
   const [emailField, setEmail] = useState(email);
-  const [username, setUsername] = useState('');
+  const [usernameField, setUsername] = useState(username);
   const [typeField, setType] = useState(type);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -34,8 +34,8 @@ const UserForm = ({
     let data = {};
     if (email !== emailField) data.email = emailField;
     if (type !== typeField) data.type = typeField;
+    if (username !== usernameField) data.username = usernameField;
     if (!!password) data.password = password;
-    if (!!username) data.username = username;
     onSubmit && onSubmit(data);
   }
 
@@ -63,7 +63,7 @@ const UserForm = ({
           autoFocus
           label="username"
           placeholder="username"
-          value={username}
+          value={usernameField}
           onChange={e => setUsername(e.target.value)}
           InputLabelProps={{
             shrink: true,

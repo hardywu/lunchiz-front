@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context('Homepage', () => {
+context('Admin', () => {
   beforeEach(function () {
     cy.server()
     cy.fixture('restaurants').as('restaurantsJSON')
@@ -10,7 +10,7 @@ context('Homepage', () => {
     cy.route('GET', '/stores**', 'fx:restaurants').as('rests')
     cy.route('GET', '/users**', 'fx:users').as('users')
     cy.route('GET', '/stores/*', 'fx:restaurant_to_review').as('rest')
-    cy.route('GET', '/reviews**', 'fx:reviews')
+    cy.route('GET', '/reviews**', 'fx:reviews').as('reviews')
     cy.route('GET', '/auth/me**', 'fx:admin_me')
     cy.adminLogin()
   })
@@ -45,7 +45,8 @@ context('Homepage', () => {
     cy.visit('/admin/users')
     const user = this.usersJSON.data[0]
     cy.route('DELETE', '/users/*', {}).as('delUser')
-    cy.contains(user.attributes.email).find('button:contains("delete")').click()
+    cy.contains('tr', user.attributes.email).find('button:contains("delete")')
+      .click()
     cy.wait('@delUser')
     cy.contains(user.attributes.email).should('not.exist')
   })
@@ -71,8 +72,11 @@ context('Homepage', () => {
   it('delete review', function () {
     cy.visit('/admin/reviews')
     const review = this.reviewsJSON.data[0]
+    cy.wait('@reviews')
     cy.route('DELETE', '/reviews/*', {}).as('delReview')
-    cy.contains(review.attributes.comment).find('button:contains("delete")').click()
+    cy.contains('tr', review.attributes.comment)
+      .find('button:contains("delete")')
+      .click()
     cy.wait('@delReview')
     cy.contains(review.attributes.comment).should('not.exist')
   })
@@ -102,8 +106,11 @@ context('Homepage', () => {
   it('delete restaurant', function () {
     cy.visit('/admin')
     const restaurant = this.restaurantsJSON.data[0]
+    cy.wait('@rests')
     cy.route('DELETE', '/stores/*', {}).as('delRestaurant')
-    cy.contains('button', "delete").closest(`:contains("${restaurant.attributes.name}")`).click()
+    cy.contains('tr', restaurant.attributes.name)
+      .find('button:contains("delete")')
+      .click()
     cy.wait('@delRestaurant')
     cy.contains(restaurant.attributes.name).should('not.exist')
   })
