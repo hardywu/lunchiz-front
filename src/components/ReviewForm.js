@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, Typography, TextField, Box,
+  Button, Typography, TextField, Box, FormControl,
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import format from 'date-fns/format';
@@ -9,9 +9,26 @@ import format from 'date-fns/format';
 const useStyles = makeStyles(theme => ({
   form: {
     display: 'flex',
+    flexDirection: 'column',
   },
+  container: {
+    marginTop: theme.spacing(1),
+    display: 'flex',
+  },
+  user: {
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(4),
+  },
+  review: {
+  },
+  rating: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  reply: {
+    paddingLeft: theme.spacing(4),
+  }
 }));
-
 
 const ReviewForm = ({
   onSubmit, rate=3, comment='', reply='', date=format(new Date(), 'yyyy-MM-dd'),
@@ -37,6 +54,7 @@ const ReviewForm = ({
           }}
         />
       </Box>
+      <FormControl margin="normal" required>
       <TextField
         id="comment"
         name="comment"
@@ -50,6 +68,8 @@ const ReviewForm = ({
         }}
         variant="outlined"
       />
+      </FormControl>
+      <FormControl margin="normal" required>
       <TextField
         id="reply"
         name="reply"
@@ -63,6 +83,8 @@ const ReviewForm = ({
         }}
         variant="outlined"
       />
+      </FormControl>
+      <FormControl margin="normal" required>
       <TextField
         id="date"
         name="date"
@@ -76,7 +98,8 @@ const ReviewForm = ({
           shrink: true,
         }}
       />
-      <Button type="submit">SAVE</Button>
+      </FormControl>
+      <Button variant="outlined" type="submit">SAVE</Button>
     </form>)
 }
 

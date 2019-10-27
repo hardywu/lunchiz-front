@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from "@reach/router";
 import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,6 +14,7 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import { doFetchRestaurantList, doDeleteRestaurant } from '../../actions';
 import { globalRecords } from '../../utils';
+import RateSlider from '../../components/RateSlider';
 
 const RestaurantList = ({
   restaurants, fetchList, total, deleteLoading, deleteRestaurant,
@@ -31,14 +35,7 @@ const RestaurantList = ({
   const deleteHandler = id => () => deleteRestaurant(id);
   return (
     <div>
-      <Slider
-        value={[minRate, maxRate]}
-        max={5}
-        min={0}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-        aria-labelledby="range-slider"
-      />
+      <RateSlider value={[minRate, maxRate]}  onChange={handleChange} />
       <Table>
         <TableBody>
         {
@@ -48,7 +45,10 @@ const RestaurantList = ({
                 {restaurant.name}
               </Link></TableCell>
               <TableCell>
-                <Link to={`${restaurant.id}/edit`}>edit</Link>
+                <Rating value={Number(restaurant.rateAvg)} readOnly />
+              </TableCell>
+              <TableCell align="right">
+                <Button component={Link} to={`${restaurant.id}/edit`}>edit</Button>
                 <Button
                   disabled={deleteLoading}
                   onClick={deleteHandler(restaurant.id)}>

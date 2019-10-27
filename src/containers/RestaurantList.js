@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 import { doFetchRestaurantList } from '../actions';
 import { globalRecords } from '../utils';
+import RateSlider from '../components/RateSlider';
 
 const RestaurantList = (props) => {
   const [[minRate, maxRate], setRateRange] = React.useState([0, 5]);
@@ -30,18 +31,7 @@ const RestaurantList = (props) => {
   )
   return (
     <div>
-      <Box display='flex' alignItems="center" noWrap>
-        Rate Range:
-        <Slider
-          className='filter'
-          value={[minRate, maxRate]}
-          max={5}
-          min={0}
-          onChange={handleChange}
-          valueLabelDisplay="auto"
-          aria-labelledby="range-slider"
-        />
-      </Box>
+      <RateSlider value={[minRate, maxRate]}  onChange={handleChange} />
       <Table>
         <TableBody>
         {

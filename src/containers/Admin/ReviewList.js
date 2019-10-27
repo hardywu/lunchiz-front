@@ -2,11 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from "@reach/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import Button from '@material-ui/core/Button';
 import { doFetchReviewList, doDeleteReview } from '../../actions';
 import { globalRecords } from '../../utils';
+import Review from '../../components/Review';
 
-const ReviewList = ({idList, fetchReviewList, deleteReview, deleteLoading}) => {
+const ReviewList = ({
+  idList, fetchReviewList, deleteReview, deleteLoading, total,
+}) => {
   const [page, setPage] = React.useState(1);
   const [perPage, setPerPage] = React.useState(20);
   React.useEffect(
@@ -14,22 +23,48 @@ const ReviewList = ({idList, fetchReviewList, deleteReview, deleteLoading}) => {
     [fetchReviewList, perPage, page])
 
   if (!idList) return <CircularProgress />
-
+  const handleChangePage = (event, newPage) => setPage(newPage)
+  const handleChangeRowsPerPage = (event) => {
+    setPerPage(parseInt(event.target.value, 10))
+    setPage(1)
+  }
   const reviews = idList.map(id => globalRecords[id]).filter(rev => rev);
   const deleteHandler = id => () => deleteReview(id);
   return (
-    <div>
-      ReviewList
+    <Table>
+      <TableBody>
       {
-        reviews.map(rev => <tr key={rev.id}>
-          {rev.comment} : {rev.rate}
-          <Link to={`${rev.id}/edit`}>edit</Link>
+        reviews.map(rev => <TableRow key={rev.id}>
+          <TableCell component="th" scope="row"><Review review={rev} /></TableCell>
+          <TableCell align="right">
+          <Button component={Link} to={`${rev.id}/edit`}>edit</Button>
           <Button disabled={deleteLoading} onClick={deleteHandler(rev.id)}>
             delete
           </Button>
-        </tr>)
+          </TableCell>
+        </TableRow>)
       }
-    </div>
+      </TableBody>
+
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={4}
+              rowsPerPageOptions={[20, 50]}
+              count={total}
+              rowsPerPage={perPage}
+              page={page - 1}
+              SelectProps={{
+                inputProps: { 'aria-label': 'Rows Per Page' },
+                native: true,
+              }}
+              labelRowsPerPage='Rows Per Page'
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
+    </Table>
   );
 }
 

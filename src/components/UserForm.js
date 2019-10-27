@@ -24,6 +24,7 @@ const UserForm = ({
 }) => {
   const classes = useStyles();
   const [emailField, setEmail] = useState(email);
+  const [username, setUsername] = useState('');
   const [typeField, setType] = useState(type);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -34,6 +35,7 @@ const UserForm = ({
     if (email !== emailField) data.email = emailField;
     if (type !== typeField) data.type = typeField;
     if (!!password) data.password = password;
+    if (!!username) data.username = username;
     onSubmit && onSubmit(data);
   }
 
@@ -51,6 +53,22 @@ const UserForm = ({
           InputLabelProps={{
             shrink: true,
           }}
+          variant="outlined"
+        />
+      </FormControl>
+      <FormControl margin="normal" required fullWidth>
+        <TextField
+          id="username"
+          name="username"
+          autoFocus
+          label="username"
+          placeholder="username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          required
           variant="outlined"
         />
       </FormControl>
