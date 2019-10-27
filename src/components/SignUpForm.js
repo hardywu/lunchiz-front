@@ -23,6 +23,7 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [username, setUsername] = useState('');
   const [type, setType] = useState('User');
   const [emailInvalid, setEmailInvalid] = useState(false);
   const [pwdNotConfirmed, setPwdNotConfirmed] = useState(false);
@@ -40,7 +41,7 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   }
   const submitHandler = e => {
     e.preventDefault()
-    onSubmit({email: email.replace(/\s/g, ''), password, type});
+    onSubmit({email: email.replace(/\s/g, ''), password, username, type});
   }
 
   return (
@@ -58,6 +59,22 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
             shrink: true,
           }}
           error={emailInvalid}
+          variant="outlined"
+        />
+      </FormControl>
+      <FormControl margin="normal" required fullWidth>
+        <TextField
+          id="username"
+          name="username"
+          autoFocus
+          label="username"
+          placeholder="username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          required
           variant="outlined"
         />
       </FormControl>

@@ -26,7 +26,6 @@ export const doSignUp = (payload) => {
 }
 
 export const succedSignUp = (data) => {
-  console.log('up', data)
   return { type: SIGN_UP_SUCCED, data }
 }
 

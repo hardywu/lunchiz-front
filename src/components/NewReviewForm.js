@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, Typography, TextField, Box,
+  Button, Typography, TextField, Box, FormControl,
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import format from 'date-fns/format';
@@ -9,6 +9,7 @@ import format from 'date-fns/format';
 const useStyles = makeStyles(theme => ({
   form: {
     display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
@@ -34,33 +35,37 @@ const NewReviewForm = ({onSubmit}) => {
           }}
         />
       </Box>
-      <TextField
-        id="comment"
-        name="comment"
-        autoFocus
-        label="comment"
-        placeholder="comment"
-        value={comment}
-        onChange={e => setComment(e.target.value)}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        variant="outlined"
-      />
-      <TextField
-        id="date"
-        name="date"
-        type="date"
-        format="yyyy-MM-dd"
-        label="date of visit"
-        value={date}
-        onChange={e => setDate(e.target.value)}
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <Button type="submit">Create Review</Button>
+      <FormControl margin="normal" required >
+        <TextField
+          id="comment"
+          name="comment"
+          autoFocus
+          label="comment"
+          placeholder="comment"
+          value={comment}
+          onChange={e => setComment(e.target.value)}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+        />
+      </FormControl>
+      <FormControl margin="normal" required >
+        <TextField
+          id="date"
+          name="date"
+          type="date"
+          format="yyyy-MM-dd"
+          label="date of visit"
+          value={date}
+          onChange={e => setDate(e.target.value)}
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      </FormControl>
+      <Button type="submit" variant='outlined' size='large'>Create Review</Button>
     </form>)
 }
 

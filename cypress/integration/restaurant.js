@@ -15,9 +15,7 @@ context('Restaurant', () => {
     cy.visit('/restaurant/' + this.restaurantJSON.data.id)
     cy.contains(this.restaurantJSON.data.attributes.name).should('be.visible')
     cy.contains('a', 'latest').should('be.visible')
-    cy.contains('a', 'write').should('be.visible')
-    cy.route('GET', '/reviews**', 'fx:reviews').as('reviews')
-
+    cy.contains('a', 'Write').should('be.visible')
 
     cy.contains('a', 'highest').should('be.visible')
     cy.route('GET', '/reviews**', 'fx:reviews').as('reviews')
@@ -26,7 +24,6 @@ context('Restaurant', () => {
     cy.get('@reviews').then(function (xhr) {
       expect(xhr.url).to.contains('orderByRate=desc')
     })
-
 
     cy.contains('a', 'lowest').should('be.visible')
     cy.route('GET', '/reviews**', 'fx:reviews').as('reviews')
@@ -39,10 +36,7 @@ context('Restaurant', () => {
 
   it('write a review', function () {
     cy.visit('/restaurant/' + this.restaurantJSON.data.id)
-    cy.contains('pending').click()
-    cy.location('pathname').should('equal', '/dashboard/pendingReviews')
-    this.reviewsJSON.data.forEach(rev => {
-      cy.contains(rev.attributes.comment.slice(0, 4)).should('be.visible')
-    })
+    cy.contains('Write').click()
+    cy.location('pathname').should('contains', 'newReview')
   })
 })

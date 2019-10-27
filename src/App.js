@@ -23,6 +23,13 @@ const theme = createMuiTheme({
       textTransform: 'none',
     },
   },
+  overrides: {
+    MuiAppBar: {
+      root: {
+        boxShadow: 'none',
+      },
+    },
+  },
 });
 
 function App() {
@@ -32,7 +39,7 @@ function App() {
         <Home path="/" />
         <SignIn path="/login" />
         <SignUp path="/register" />
-        <Restaurant path="/restaurant/:storeId/*" />
+        <Restaurant path="restaurant/:storeId/*" />
         <Dashboard path="/dashboard/*" />
         <Admin path="/admin/*" />
         <Redirect noThrow from="admin" to="admin/restaurants" />

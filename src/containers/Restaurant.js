@@ -2,47 +2,80 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Router } from "@reach/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { doFetchRestaurant, doFetchMyReview } from '../actions';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Rating from '@material-ui/lab/Rating';
+import { signOut, doFetchRestaurant, doFetchMyReview } from '../actions';
 import { globalRecords } from '../utils';
 import ReviewList from './ReviewList';
+import Navbar from '../components/Navbar';
 import CreateReview from './CreateReview';
 import Review from '../components/Review';
+import MyReview from './MyReview';
 
 const getMyReviewId = rest => rest && rest.canReview && rest.myReviewId
 const getMyReview = rest => getMyReviewId(rest) &&
   globalRecords[`review_${getMyReviewId(rest)}`]
 
-const Restaurant = (props) => {
-  const {
-    storeId, restaurant, fetchRestaurant, fetchMyReview, myReview,
-  } = props;
+const useStyles = makeStyles(theme => ({
+  rating: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  nav: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+}));
+
+const Restaurant = ({
+  storeId, restaurant, fetchRestaurant, fetchMyReview, myReview,
+}) => {
+  const classes = useStyles()
   const myReviewId = getMyReviewId(restaurant);
   React.useEffect(() => {
     fetchRestaurant(storeId)
   }, [fetchRestaurant, storeId]);
-  React.useEffect(() => {
-    myReviewId && fetchMyReview(myReviewId);
-  }, [fetchMyReview, myReviewId]);
 
   if (restaurant)  return (
     <div>
-      {restaurant.name}
-      Average Rate: { restaurant.rate_avg }
-      <div>
-        <Link to='./'>latest reviews</Link>
-        <Link to='highestReviews'>highest reviews</Link>
-        <Link to='lowestReviews'>lowest reviews</Link>
+      <Navbar signOut={signOut} />
+      <Container maxWidth="lg" >
+        <Typography component="h1" variant="h5">{restaurant.name}</Typography>
+        <div className={classes.rating}>
+          <Rating value={Number(restaurant.rateAvg)} readOnly />
+          <Box ml={2}>{restaurant.reviewsCount} reviews</Box>
+        </div>
+        {
+          restaurant.myReviewId &&
+          <Button component={Link} to='myReview' variant="outlined">
+            My review
+          </Button>
+        }
         {
           restaurant.canReview && !restaurant.myReviewId &&
-          <Link to='newReview'>write a review</Link> }
-        { myReview && <Review review={myReview} /> }
-      </div>
-      <Router>
-        <ReviewList path="/"  />
-        <ReviewList path="highestReviews" orderByRate='desc' />
-        <ReviewList path="lowestReviews" orderByRate='asc' />
-        <CreateReview path="newReview"  />
-      </Router>
+          <Button component={Link} to='newReview' variant="outlined">
+            Write a review
+          </Button>
+        }
+        <div className={classes.nav}>
+          <Button component={Link} to='./'>latest reviews</Button>
+          <Button component={Link} to='highestReviews'>highest reviews</Button>
+          <Button component={Link} to='lowestReviews'>lowest reviews</Button>
+        </div>
+        <Router>
+          <ReviewList path="/"  />
+          <ReviewList path="highestReviews" orderByRate='desc' />
+          <ReviewList path="lowestReviews" orderByRate='asc' />
+          <CreateReview path="newReview"  />
+          <MyReview path="myReview" />
+        </Router>
+      </Container>
     </div>
   );
 
@@ -55,6 +88,7 @@ export default connect((state, { storeId }) => ({
   restaurant: globalRecords[`store_${storeId}`],
   myReview: getMyReview(globalRecords[`store_${storeId}`]),
 }), (dispatch) => ({
+  signOut: () => dispatch(signOut()),
   fetchRestaurant: (id) => dispatch(doFetchRestaurant(id)),
   fetchMyReview: id => dispatch(doFetchMyReview(id)),
 }))(Restaurant);
