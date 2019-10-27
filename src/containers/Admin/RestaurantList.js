@@ -13,7 +13,7 @@ import { doFetchRestaurantList, doDeleteRestaurant } from '../../actions';
 import { globalRecords } from '../../utils';
 
 const RestaurantList = ({
-  restaurants, fetchList, total, ownerId, deleteLoading, deleteRestaurant,
+  restaurants, fetchList, total, deleteLoading, deleteRestaurant,
 }) => {
   const [[minRate, maxRate], setRateRange] = React.useState([0, 5]);
   const [page, setPage] = React.useState(1);
@@ -25,8 +25,8 @@ const RestaurantList = ({
     setPage(1)
   }
   React.useEffect(
-    () => { fetchList({minRate, maxRate, page, perPage, ownerId}) },
-    [minRate, maxRate, page, perPage, fetchList, ownerId]
+    () => { fetchList({minRate, maxRate, page, perPage}) },
+    [minRate, maxRate, page, perPage, fetchList]
   )
   const deleteHandler = id => () => deleteRestaurant(id);
   return (

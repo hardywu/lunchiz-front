@@ -71,8 +71,8 @@ const UserForm = ({
       </FormControl>
       <FormControl margin="normal" required fullWidth error>
         <TextField
-          id="passwordConfirm"
-          name="passwordConfirm"
+          id="confirm"
+          name="confirm"
           label="Password Confirmation"
           type="password"
           placeholder="123123"
@@ -93,7 +93,7 @@ const UserForm = ({
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">User Category</FormLabel>
         <RadioGroup
-          aria-label="type" name="type1" value={typeField}
+          aria-label="type" name="type" value={typeField}
           onChange={(e) => setType(e.target.value)}>
           <FormControlLabel value="User" control={<Radio />} label="User" />
           <FormControlLabel value="Owner" control={<Radio />} label="Owner" />
@@ -109,7 +109,7 @@ const UserForm = ({
         color="primary"
         className={classes.submit}
       >
-        { loading ? <CircularProgress /> : "Save" }
+        { loading ? <CircularProgress /> : "SAVE" }
       </Button>
     </form>
   );

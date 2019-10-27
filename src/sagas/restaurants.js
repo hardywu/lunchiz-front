@@ -49,7 +49,7 @@ function* deleteRestaurant({ id }) {
       url: `/stores/${id}`,
       method: 'delete',
     });
-    yield put(actions.succedDeleteRestaurant(idToRecordId(id, 'user')));
+    yield put(actions.succedDeleteRestaurant(idToRecordId(id, 'store')));
   } catch (e) {
     yield put(actions.failedDeleteRestaurant('err'))
   }

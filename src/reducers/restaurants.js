@@ -47,6 +47,7 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         deleteLoading: false,
+        idList: state.idList.filter(id => id != action.id),
       }
     case DELETE_RESTAURANT_FAILED:
       return {

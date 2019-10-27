@@ -29,6 +29,7 @@ const RestaurantList = (props) => {
   return (
     <div>
       <Slider
+        className='filter'
         value={[minRate, maxRate]}
         max={5}
         min={0}

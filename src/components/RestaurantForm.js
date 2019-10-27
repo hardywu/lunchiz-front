@@ -33,7 +33,7 @@ const RestaurantForm = ({onSubmit, name=''}) => {
         }}
         variant="outlined"
       />
-      <Button type="submit">Save</Button>
+      <Button type="submit">SAVE</Button>
     </form>)
 }
 

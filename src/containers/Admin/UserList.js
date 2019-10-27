@@ -26,13 +26,13 @@ const UserList = ({idList, fetchUserList, deleteUser, deleteLoading}) => {
       </Fade>
       UserList
       {
-        users.map(user => (<div key={user.id}>
+        users.map(user => (<tr key={user.id}>
             {user.email}
             <Link to={`${user.id}/edit`}>edit</Link>
             <Button disabled={deleteLoading} onClick={deleteHandler(user.id)}>
               delete
             </Button>
-          </div>)
+          </tr>)
         )
       }
     </div>

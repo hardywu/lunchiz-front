@@ -21,13 +21,13 @@ const ReviewList = ({idList, fetchReviewList, deleteReview, deleteLoading}) => {
     <div>
       ReviewList
       {
-        reviews.map(rev => <div key={rev.id}>
+        reviews.map(rev => <tr key={rev.id}>
           {rev.comment} : {rev.rate}
           <Link to={`${rev.id}/edit`}>edit</Link>
           <Button disabled={deleteLoading} onClick={deleteHandler(rev.id)}>
             delete
           </Button>
-        </div>)
+        </tr>)
       }
     </div>
   );

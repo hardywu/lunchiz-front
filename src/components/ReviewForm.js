@@ -51,6 +51,19 @@ const ReviewForm = ({
         variant="outlined"
       />
       <TextField
+        id="reply"
+        name="reply"
+        autoFocus
+        label="reply"
+        placeholder="reply"
+        value={replyField}
+        onChange={e => setReply(e.target.value)}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        variant="outlined"
+      />
+      <TextField
         id="date"
         name="date"
         type="date"
@@ -63,7 +76,7 @@ const ReviewForm = ({
           shrink: true,
         }}
       />
-      <Button type="submit">Save</Button>
+      <Button type="submit">SAVE</Button>
     </form>)
 }
 
