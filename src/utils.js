@@ -64,6 +64,9 @@ export const parseJsonApi = ({ included, data }) => {
   return recordId(data);
 }
 
+export const parseJsonError = ({ errors = [] }) =>  errors.map(e => e.detail)
+export const delRecord = recId => { delete globalRecords[recId] }
+
 export const toJsonApi = (resource = {}) => {
   let obj = {
     id: resource.id, type: resource.type,

@@ -2,7 +2,9 @@ import {
   call, put, takeLeading, all,
 } from 'redux-saga/effects'
 import * as actions from '../actions';
-import { apiService, parseJsonApi, toJsonApi, idToRecordId } from '../utils';
+import {
+  apiService, parseJsonApi, toJsonApi, idToRecordId, parseJsonError,
+} from '../utils';
 
 function* fetchUser({ id }) {
   try {
@@ -38,8 +40,10 @@ function* updateUser({ id, data: rawData, successCB, errorCB }) {
     });
     yield put(actions.succedUpdateUser(parseJsonApi(data)));
     if (successCB) yield call(successCB);
-  } catch (e) {
-    yield put(actions.failedUpdateUser('err'))
+  } catch (err) {
+    const { response = {} } = err;
+    const { data = {} } = response;
+    yield put(actions.failedUpdateUser(parseJsonError(data)));
     if (errorCB) yield call(errorCB);
   }
 }
@@ -51,8 +55,10 @@ function* deleteUser({ id }) {
       method: 'delete',
     });
     yield put(actions.succedDeleteUser(idToRecordId(id, 'user')));
-  } catch (e) {
-    yield put(actions.failedDeleteUser('err'))
+  } catch (err) {
+    const { response = {} } = err;
+    const { data = {} } = response;
+    yield put(actions.failedDeleteUser(data.errors.map(e => e.detail)));
   }
 }
 

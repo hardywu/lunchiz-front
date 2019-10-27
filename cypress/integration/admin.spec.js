@@ -69,6 +69,48 @@ context('Admin', () => {
     cy.contains('newEmail@test.io').should('be.visible')
   })
 
+  it('could not update user with duplicate  email', function() {
+    cy.visit('admin/users')
+
+    const user = this.usersJSON.data[0]
+    cy.contains('tr', user.attributes.email).find('a:contains("edit")').click()
+    cy.location('pathname').should('equal', `/admin/users/${user.id}/edit`)
+
+    cy.get('[name=email]').clear().type("duplicatedEmail@test.io")
+
+    Object.assign(user.attributes, { email: 'newEmail@test.io', role: 'Admin' })
+    const errMsg = 'Email conflicts with existing records'
+    cy.route({
+      method: 'PATCH',
+      url: '/users/*',
+      status: 422,
+      response: { errors: [{ detail: errMsg }]}
+    }).as('editUser')
+    cy.contains('button', 'SAVE').click()
+    cy.contains(errMsg).should('be.visible')
+  })
+
+  it('could not update user with duplicate  username', function() {
+    cy.visit('admin/users')
+
+    const user = this.usersJSON.data[0]
+    cy.contains('tr', user.attributes.email).find('a:contains("edit")').click()
+    cy.location('pathname').should('equal', `/admin/users/${user.id}/edit`)
+
+    cy.get('[name=username]').clear().type("duplicatedUsername")
+
+    Object.assign(user.attributes, { username: 'duplicatedUsername', role: 'Admin' })
+    const errMsg = 'username conflicts with existing records'
+    cy.route({
+      method: 'PATCH',
+      url: '/users/*',
+      status: 422,
+      response: { errors: [{ detail: errMsg }]}
+    }).as('editUser')
+    cy.contains('button', 'SAVE').click()
+    cy.contains(errMsg).should('be.visible')
+  })
+
   it('delete review', function () {
     cy.visit('/admin/reviews')
     const review = this.reviewsJSON.data[0]

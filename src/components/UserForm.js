@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UserForm = ({
-  onSubmit, loading, error, email='', type='User', username='',
+  onSubmit, loading, errors=[], email='', type='User', username='',
 }) => {
   const classes = useStyles();
   const [emailField, setEmail] = useState(email);
@@ -28,6 +28,7 @@ const UserForm = ({
   const [typeField, setType] = useState(type);
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [pristine, setPristine] = useState(true);
   const submitHandler = e => {
     e.preventDefault()
     if (password !== passwordConfirm) return;
@@ -37,6 +38,7 @@ const UserForm = ({
     if (username !== usernameField) data.username = usernameField;
     if (!!password) data.password = password;
     onSubmit && onSubmit(data);
+    setPristine(false);
   }
 
   return (
@@ -118,7 +120,10 @@ const UserForm = ({
           <FormControlLabel value="Admin" control={<Radio />} label="Admin" />
         </RadioGroup>
       </FormControl>
-      {error && <Typography color="error">{error}</Typography>}
+      {
+        !pristine && errors && errors.map(
+          err => <Typography color="error" key={err}>{err}</Typography>)
+      }
       <Button
         disabled={loading}
         type="submit"

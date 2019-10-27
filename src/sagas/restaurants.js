@@ -64,7 +64,6 @@ function* updateRestaurant({ id, data: rawData, successCB, errorCB }) {
       data: toJsonApi(rawData),
     });
     yield put(actions.succedUpdateRestaurant(parseJsonApi(data)));
-    console.log('successCB', successCB)
     if (successCB) yield call(successCB)
   } catch (e) {
     yield put(actions.failedUpdateRestaurant('err'))
