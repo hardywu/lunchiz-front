@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Button, withStyles, Typography, FormControl, FormHelperText, TextField,
+  Button, Typography, FormControl, TextField,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { validateEmail } from '../utils';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   form: {
     maxWidth: 600,
     width: '100%', // Fix IE 11 issue.
@@ -13,9 +14,10 @@ const styles = theme => ({
   submit: {
     marginTop: theme.spacing( 3),
   },
-});
+}));
 
-const SignIn = ({ classes, onSubmit, loading=false, errors=[] }) => {
+export default function SignIn({ onSubmit, loading=false, errors=[] }) {
+  const classes = useStyles();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [emailInvalid, setEmailInvalid] = useState(false);
@@ -29,7 +31,11 @@ const SignIn = ({ classes, onSubmit, loading=false, errors=[] }) => {
   }
 
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
+    <form className={classes.form} noValidate onSubmit={submitHandler}>
+      {
+        errors.map(err =>
+          (<Typography color="error" key={err}>{err}</Typography>))
+      }
       <FormControl margin="normal" required fullWidth>
         <TextField
           id="email"
@@ -62,10 +68,6 @@ const SignIn = ({ classes, onSubmit, loading=false, errors=[] }) => {
           variant="outlined"
         />
       </FormControl>
-      {
-        errors.map(err =>
-          (<Typography color="error" key={err}>{err}</Typography>))
-      }
       <Button
         disabled={loading || emailInvalid}
         type="submit"
@@ -79,5 +81,3 @@ const SignIn = ({ classes, onSubmit, loading=false, errors=[] }) => {
     </form>
   );
 }
-
-export default withStyles(styles)(SignIn);

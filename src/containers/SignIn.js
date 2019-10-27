@@ -1,16 +1,20 @@
 import React from 'react';
 import { Link, Redirect } from "@reach/router";
 import { connect } from 'react-redux';
+import SignInPanel from '../components/SignInPanel';
 import SignInForm from '../components/SignInForm';
 import { doSignIn } from '../actions';
 
 const Signin = ({ isAuthed, signIn, signInError }) => {
   if (isAuthed) return <Redirect noThrow to='/' />;
   return (
-    <div>
-      <Link to='/register'>signup</Link>
+    <SignInPanel signUpLink={
+      <Link to='/register' variant="body2">
+        Don't have an account? Sign Up
+      </Link>
+    } >
       <SignInForm onSubmit={signIn} errors={[signInError]} />
-    </div>
+    </SignInPanel>
   );
 }
 

@@ -3,14 +3,22 @@ import { Link, Redirect } from "@reach/router";
 import { connect } from 'react-redux';
 import { doSignUp } from '../actions';
 import SignUpForm from '../components/SignUpForm';
+import SignUpPanel from '../components/SignUpPanel';
 
 const Signup = ({ isAuthed, signUp, signUpError }) => {
   if (isAuthed) return <Redirect noThrow to='/' />;
   return (
-    <div>
-      <Link to='/login'>signin</Link>
-      <SignUpForm onSubmit={signUp} errors={[signUpError]} />
-    </div>
+    <SignUpPanel
+      signInLink={
+        <Link to='/login' variant="body2">
+          Already have an account? Sign in
+        </Link>
+      }
+    >
+      <SignUpForm onSubmit={signUp} errors={[signUpError]}
+
+      />
+    </SignUpPanel>
   );
 }
 

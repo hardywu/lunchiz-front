@@ -11,6 +11,13 @@ import Admin from './containers/Admin';
 import NotFound from './components/NotFound';
 
 const theme = createMuiTheme({
+  props: {
+    // Name of the component ⚛️
+    MuiButtonBase: {
+      // The properties to apply
+      disableRipple: true, // No more ripple, on the whole application 💣!
+    },
+  },
   typography: {
     button: {
       textTransform: 'none',
@@ -20,7 +27,7 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <ThemeProvider className="App" theme={theme}>
+    <ThemeProvider theme={theme}>
       <Router>
         <Home path="/" />
         <SignIn path="/login" />

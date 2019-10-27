@@ -44,7 +44,7 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   }
 
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
+    <form className={classes.form} noValidate onSubmit={submitHandler}>
       <FormControl margin="normal" required fullWidth>
         <TextField
           id="email"
@@ -103,12 +103,15 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
           err => <Typography color="error" key={err}>{err}</Typography>)
       }
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">User Category</FormLabel>
+        <FormLabel component="legend">You are a?</FormLabel>
         <RadioGroup
           aria-label="type" name="type" value={type}
           onChange={(e) => setType(e.target.value)}>
           <FormControlLabel value="User" control={<Radio />} label="User" />
-          <FormControlLabel value="Owner" control={<Radio />} label="Owner" />
+          <FormControlLabel
+            value="Owner" control={<Radio />}
+            label="Restaurant Owner"
+          />
         </RadioGroup>
       </FormControl>
       <Button
