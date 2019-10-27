@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from "@reach/router";
+import { Redirect, Link } from "@reach/router";
 import { connect } from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Navbar from '../components/Navbar';
@@ -25,7 +25,9 @@ const Home = (props) => {
 
   return (
     <div>
-      <Navbar signOut={signOut} />
+      <Navbar signOut={signOut}>
+        <Link to="/">REVIEW</Link>
+      </Navbar>
       <Container component="main" maxWidth="lg">
         <CssBaseline />
         <br /><br />

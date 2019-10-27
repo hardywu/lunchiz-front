@@ -4,7 +4,7 @@ import {
 import * as actions from '../actions';
 import { apiService, parseJsonApi, toJsonApi, idToRecordId } from '../utils';
 
-function* createRestaurant({ data: rawData, successCB }) {
+function* createRestaurant({ data: rawData, successCB, errorCB }) {
   try {
     const { data } = yield call(apiService.request, {
       url: '/stores',
@@ -15,6 +15,7 @@ function* createRestaurant({ data: rawData, successCB }) {
     if (successCB) yield call(successCB)
   } catch (e) {
     yield put(actions.failedCreateRestaurant('err'))
+    if (errorCB) yield call(errorCB);
   }
 }
 
@@ -55,7 +56,7 @@ function* deleteRestaurant({ id }) {
   }
 }
 
-function* updateRestaurant({ id, data: rawData, successCB }) {
+function* updateRestaurant({ id, data: rawData, successCB, errorCB }) {
   try {
     const { data } = yield call(apiService.request, {
       url: `/stores/${id}`,
@@ -67,6 +68,7 @@ function* updateRestaurant({ id, data: rawData, successCB }) {
     if (successCB) yield call(successCB)
   } catch (e) {
     yield put(actions.failedUpdateRestaurant('err'))
+    if (errorCB) yield call(errorCB);
   }
 }
 

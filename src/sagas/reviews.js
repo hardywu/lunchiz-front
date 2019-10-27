@@ -19,6 +19,7 @@ function* createReview({ data: rawData, successCB, errorCB }) {
     if (successCB) yield call(successCB);
   } catch (e) {
     yield put(actions.failedCreateReview('err'))
+    if (errorCB) yield call(errorCB);
   }
 }
 
@@ -46,7 +47,7 @@ function* fetchMyReview({ id }) {
   }
 }
 
-function* replyReview({ id, data: rawData }) {
+function* replyReview({ id, data: rawData, successCB, errorCB }) {
   try {
     const { data } = yield call(apiService.request, {
       url: `/reviews/${id}/reply`,
@@ -54,8 +55,10 @@ function* replyReview({ id, data: rawData }) {
       data: toJsonApi(rawData),
     });
     yield put(actions.succedReplyReview(parseJsonApi(data)));
+    if (successCB) yield call(successCB);
   } catch (e) {
     yield put(actions.failedReplyReview('err'))
+    if (errorCB) yield call(errorCB);
   }
 }
 
@@ -96,6 +99,7 @@ function* updateReview({ id, data: rawData, successCB, errorCB }) {
     if (successCB) yield call(successCB);
   } catch (e) {
     yield put(actions.failedUpdateReview('err'))
+    if (errorCB) yield call(errorCB);
   }
 }
 

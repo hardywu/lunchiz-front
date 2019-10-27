@@ -44,7 +44,9 @@ const Restaurant = ({
 
   if (restaurant)  return (
     <div>
-      <Navbar signOut={signOut} />
+      <Navbar signOut={signOut}>
+        <Link to="/">REVIEW</Link>
+      </Navbar>
       <Container maxWidth="lg" >
         <Typography component="h1" variant="h5">{restaurant.name}</Typography>
         <div className={classes.rating}>

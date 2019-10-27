@@ -35,7 +35,7 @@ const NewReviewForm = ({onSubmit}) => {
           }}
         />
       </Box>
-      <FormControl margin="normal" required >
+      <FormControl margin="normal" required>
         <TextField
           id="comment"
           name="comment"

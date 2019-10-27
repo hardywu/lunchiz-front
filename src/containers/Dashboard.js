@@ -1,11 +1,15 @@
 import React from 'react';
 import { Redirect, Router, Link } from "@reach/router";
 import { connect } from 'react-redux';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Navbar from '../components/Navbar';
 import { signOut, doFetchMe } from '../actions';
 import RestaurantList from './RestaurantList';
 import PendingReviewList from './PendingReviewList';
+import ReplyReview from './ReplyReview';
 import { globalRecords } from '../utils';
 import CreateRestaurant from './CreateRestaurant';
 
@@ -25,17 +29,21 @@ const Admin = (props) => {
 
   return (
     <div>
-      <div>
-        <Navbar signOut={signOut} />
-        <Link to='./'>home</Link>
-        <Link to='pendingReviews'>pendingReviews</Link>
-        <Link to='createRestaurant'>add my restaurant</Link>
-      </div>
-      <Router>
-        <RestaurantList path="/" ownerId={user.id} />
-        <PendingReviewList path="pendingReviews" />
-        <CreateRestaurant path='createRestaurant' />
-      </Router>
+      <Navbar signOut={signOut}>
+        <Button component={Link} to='./'>Home</Button>
+        <Button component={Link} to='pendingReviews'>Pending Reviews</Button>
+        <Button component={Link} to='createRestaurant'>Add my restaurant</Button>
+      </Navbar>
+      <Container component="main" maxWidth="lg">
+        <CssBaseline />
+        <br /><br />
+        <Router>
+          <RestaurantList path="/" ownerId={user.id} />
+          <PendingReviewList path="pendingReviews" />
+          <ReplyReview path="pendingReviews/reply/:reviewId" />
+          <CreateRestaurant path='createRestaurant' />
+        </Router>
+      </Container>
     </div>
   );
 }

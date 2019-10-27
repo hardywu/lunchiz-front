@@ -92,8 +92,8 @@ export const failedFetchMyReview = (message) => {
   return { type: FETCH_MY_REVIEW_FAILED, message }
 }
 
-export const doReplyReview = (id, data) => {
-  return { type: REPLY_REVIEW, id, data }
+export const doReplyReview = (id, data, successCB, errorCB) => {
+  return { type: REPLY_REVIEW, id, data, successCB, errorCB }
 }
 
 export const succedReplyReview = (data) => {

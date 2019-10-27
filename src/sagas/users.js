@@ -40,6 +40,7 @@ function* updateUser({ id, data: rawData, successCB, errorCB }) {
     if (successCB) yield call(successCB);
   } catch (e) {
     yield put(actions.failedUpdateUser('err'))
+    if (errorCB) yield call(errorCB);
   }
 }
 

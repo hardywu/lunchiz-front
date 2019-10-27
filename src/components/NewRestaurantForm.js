@@ -1,12 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, TextField,
+  Button, TextField, FormControl,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   form: {
     display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
@@ -20,6 +21,7 @@ const NewRestaurantForm = ({onSubmit}) => {
   }
   return (
     <form className={classes.form} onSubmit={submitHandler}>
+      <FormControl margin="normal" required>
       <TextField
         id="name"
         name="name"
@@ -33,7 +35,8 @@ const NewRestaurantForm = ({onSubmit}) => {
         }}
         variant="outlined"
       />
-      <Button type="submit">Add Restaurant</Button>
+      </FormControl>
+      <Button variant="outlined" type="submit">Add Restaurant</Button>
     </form>)
 }
 

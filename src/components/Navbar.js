@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Navbar = ({ reviewsPath, dashboardPath, signOut }) => {
+const Navbar = ({ reviewsPath, dashboardPath, children, signOut }) => {
   const classes = useStyles();
 
   return (
@@ -27,9 +27,8 @@ const Navbar = ({ reviewsPath, dashboardPath, signOut }) => {
       <Toolbar>
 
         <Typography className={classes.title} variant="h6" noWrap>
-          <Link to="/">REVIEW</Link>
+          {children}
         </Typography>
-
         {reviewsPath && <Link to='/reviews'>reviews</Link>}
         {dashboardPath && <Link to='/dashboard'>dashboard</Link>}
         <Button color="inherit" onClick={signOut}>Logout</Button>
