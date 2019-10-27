@@ -1,37 +1,11 @@
 {
   "data": [
     {
-      "id": "77",
-      "type": "user",
-      "attributes": {
-        "email": "email@testc.io",
-        "role": "User"
-      },
-      "relationships": {}
-    },
-    {
-      "id": "76",
-      "type": "user",
-      "attributes": {
-        "email": "user444@test.io",
-        "role": "User"
-      },
-      "relationships": {}
-    },
-    {
-      "id": "75",
-      "type": "user",
-      "attributes": {
-        "email": "testuser@test.io",
-        "role": "User"
-      },
-      "relationships": {}
-    },
-    {
-      "id": "74",
+      "id": "98",
       "type": "user",
       "attributes": {
         "email": "owner3@test.io",
+        "username": "owner3",
         "role": "Owner"
       },
       "relationships": {
@@ -41,21 +15,22 @@
       }
     },
     {
-      "id": "73",
+      "id": "97",
       "type": "user",
       "attributes": {
         "email": "owner2@test.io",
+        "username": "owner2",
         "role": "Owner"
       },
       "relationships": {
         "stores": {
           "data": [
             {
-              "id": "51",
+              "id": "73",
               "type": "store"
             },
             {
-              "id": "50",
+              "id": "72",
               "type": "store"
             }
           ]
@@ -63,53 +38,30 @@
       }
     },
     {
-      "id": "72",
+      "id": "96",
       "type": "user",
       "attributes": {
         "email": "owner1@test.io",
+        "username": "owner1",
         "role": "Owner"
       },
       "relationships": {
         "stores": {
           "data": [
             {
-              "id": "49",
+              "id": "71",
               "type": "store"
             },
             {
-              "id": "58",
+              "id": "74",
               "type": "store"
             },
             {
-              "id": "57",
+              "id": "70",
               "type": "store"
             },
             {
-              "id": "56",
-              "type": "store"
-            },
-            {
-              "id": "55",
-              "type": "store"
-            },
-            {
-              "id": "54",
-              "type": "store"
-            },
-            {
-              "id": "53",
-              "type": "store"
-            },
-            {
-              "id": "52",
-              "type": "store"
-            },
-            {
-              "id": "48",
-              "type": "store"
-            },
-            {
-              "id": "47",
+              "id": "69",
               "type": "store"
             }
           ]
@@ -117,46 +69,50 @@
       }
     },
     {
-      "id": "71",
+      "id": "95",
       "type": "user",
       "attributes": {
         "email": "user3@test.io",
+        "username": "user3",
         "role": "User"
       },
       "relationships": {}
     },
     {
-      "id": "70",
+      "id": "94",
       "type": "user",
       "attributes": {
         "email": "user2@test.io",
+        "username": "user2",
         "role": "User"
       },
       "relationships": {}
     },
     {
-      "id": "69",
+      "id": "93",
       "type": "user",
       "attributes": {
         "email": "user1@test.io",
+        "username": "user1",
         "role": "User"
       },
       "relationships": {}
     },
     {
-      "id": "68",
+      "id": "92",
       "type": "user",
       "attributes": {
         "email": "admin@test.io",
+        "username": "admin",
         "role": "Admin"
       },
       "relationships": {}
     }
   ],
   "meta": {
-    "total": 10,
+    "total": 7,
     "page": 1,
-    "size": 10,
+    "size": 7,
     "limit": 20
   }
 }

@@ -4,6 +4,7 @@
     "type": "user",
     "attributes": {
       "email": "user1@test.io",
+      "username": "user1",
       "role": "Owner"
     },
     "relationships": {}
