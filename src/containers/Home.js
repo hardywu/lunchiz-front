@@ -6,6 +6,8 @@ import Navbar from '../components/Navbar';
 import { signOut, doFetchMe } from '../actions';
 import { globalRecords } from '../utils';
 import RestaurantList from './RestaurantList';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 
 const Home = (props) => {
   const { isAuthed, user, signOut, fetchMe } = props
@@ -24,7 +26,11 @@ const Home = (props) => {
   return (
     <div>
       <Navbar signOut={signOut} />
-      <RestaurantList />
+      <Container component="main" maxWidth="lg">
+        <CssBaseline />
+        <br /><br />
+        <RestaurantList />
+      </Container>
     </div>
   );
 }

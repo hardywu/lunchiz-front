@@ -8,6 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
+import Box from '@material-ui/core/Box';
+import Rating from '@material-ui/lab/Rating';
 import { doFetchRestaurantList } from '../actions';
 import { globalRecords } from '../utils';
 
@@ -28,15 +30,18 @@ const RestaurantList = (props) => {
   )
   return (
     <div>
-      <Slider
-        className='filter'
-        value={[minRate, maxRate]}
-        max={5}
-        min={0}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-        aria-labelledby="range-slider"
-      />
+      <Box display='flex' alignItems="center" noWrap>
+        Rate Range:
+        <Slider
+          className='filter'
+          value={[minRate, maxRate]}
+          max={5}
+          min={0}
+          onChange={handleChange}
+          valueLabelDisplay="auto"
+          aria-labelledby="range-slider"
+        />
+      </Box>
       <Table>
         <TableBody>
         {
@@ -45,6 +50,12 @@ const RestaurantList = (props) => {
               <TableCell><Link to={`/restaurant/${restaurant.id}`}>
                 {restaurant.name}
               </Link></TableCell>
+              <TableCell>
+                <Rating value={Number(restaurant.rateAvg)} readOnly />
+              </TableCell>
+              <TableCell>
+                {Number(restaurant.reviewsCount)} reviews
+              </TableCell>
             </TableRow>))
         }
         </TableBody>
