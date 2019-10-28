@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, Typography, TextField, Box, FormControl,
+  Button, Typography, TextField, Box, FormControl, CircularProgress,
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import format from 'date-fns/format';
@@ -14,14 +14,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const NewReviewForm = ({onSubmit}) => {
+const NewReviewForm = ({onSubmit, errors=[], loading=false}) => {
   const classes = useStyles();
   const [comment, setComment] = React.useState('');
   const [rate, setRate] = React.useState(3);
   const [date, setDate] = React.useState(format(new Date(), 'yyyy-MM-dd'));
+  const [pristine, setPristine] = React.useState(true);
   const submitHandler = (e) => {
     e.preventDefault();
     onSubmit && onSubmit({rate, date, comment});
+    setPristine(false);
   }
   return (
     <form className={classes.form} onSubmit={submitHandler}>
@@ -65,7 +67,13 @@ const NewReviewForm = ({onSubmit}) => {
           }}
         />
       </FormControl>
-      <Button type="submit" variant='outlined' size='large'>Create Review</Button>
+      {
+        !pristine && errors && errors.map(
+          err => <Typography color="error" key={err}>{err}</Typography>)
+      }
+      <Button disabled={loading} variant="outlined" type="submit">
+        { loading ? <CircularProgress /> : "Create Review" }
+      </Button>
     </form>)
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Button, Typography, FormControl, TextField,
+  Button, Typography, FormControl, TextField, CircularProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { validateEmail } from '../utils';
@@ -21,6 +21,7 @@ export default function SignIn({ onSubmit, loading=false, errors=[] }) {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [emailInvalid, setEmailInvalid] = useState(false);
+  const [pristine, setPristine] = useState(true);
   const emailSetter = (e) => {
     setEmail(e.target.value);
     setEmailInvalid(!validateEmail(e.target.value))
@@ -28,12 +29,13 @@ export default function SignIn({ onSubmit, loading=false, errors=[] }) {
   const submitHandler = e => {
     e.preventDefault()
     onSubmit(email, password)
+    setPristine(false);
   }
 
   return (
     <form className={classes.form} noValidate onSubmit={submitHandler}>
       {
-        errors.map(err =>
+        !pristine && errors && errors.map(err =>
           (<Typography color="error" key={err}>{err}</Typography>))
       }
       <FormControl margin="normal" required fullWidth>
@@ -76,7 +78,7 @@ export default function SignIn({ onSubmit, loading=false, errors=[] }) {
         variant="outlined"
         className={classes.submit}
       >
-        SIGN IN
+        { loading ? <CircularProgress /> : "SIGN IN" }
       </Button>
     </form>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { navigate } from "@reach/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Container from '@material-ui/core/Container';
 import RestaurantForm from '../../components/RestaurantForm';
 import { doFetchRestaurant, doUpdateRestaurant } from '../../actions';
 import { globalRecords, idToRecordId } from '../../utils';
@@ -12,11 +13,11 @@ const EditRestaurant = ({
   React.useEffect(() => { fetchRestaurant() }, [fetchRestaurant]);
   if (!restaurant) return <CircularProgress />
 
-  return (<div>
+  return (<Container maxWidth="sm">
       <RestaurantForm
         name={restaurant.name} onSubmit={updateRestaurant} loading={updateLoading}
       />
-    </div>)
+    </Container>)
 }
 
 export default connect((state, { restaurantId }) => ({
@@ -25,5 +26,5 @@ export default connect((state, { restaurantId }) => ({
 }), (dispatch, { restaurantId }) => ({
   fetchRestaurant: () => dispatch(doFetchRestaurant(restaurantId)),
   updateRestaurant: (data) => dispatch(
-    doUpdateRestaurant(restaurantId, data, () => navigate('/admin'))),
+    doUpdateRestaurant(restaurantId, data, () => navigate('/admin/restaurants'))),
 }))(EditRestaurant);

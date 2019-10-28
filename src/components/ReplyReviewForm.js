@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, Typography, TextField, Box, FormControl,
+  Button, Typography, TextField, Box, FormControl, CircularProgress,
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import format from 'date-fns/format';
@@ -33,13 +33,15 @@ const useStyles = makeStyles(theme => ({
 
 const ReviewForm = ({
   onSubmit, rate=3, comment='', reply='', date=format(new Date(), 'yyyy-MM-dd'),
-  reviewer={},
+  reviewer={}, errors=[], loading=false,
 }) => {
   const classes = useStyles();
   const [replyField, setReply] = React.useState(reply);
+  const [pristine, setPristine] = React.useState(true);
   const submitHandler = (e) => {
     e.preventDefault();
     onSubmit && onSubmit({ reply: replyField});
+    setPristine(false);
   }
   return (
     <form className={classes.form} onSubmit={submitHandler}>
@@ -69,7 +71,13 @@ const ReviewForm = ({
         variant="outlined"
       />
       </FormControl>
-      <Button variant="outlined" type="submit">SAVE</Button>
+      {
+        !pristine && errors && errors.map(err =>
+          (<Typography color="error" key={err}>{err}</Typography>))
+      }
+      <Button disabled={loading} variant="outlined" type="submit">
+        { loading ? <CircularProgress /> : "SAVE" }
+      </Button>
     </form>)
 }
 

@@ -3,35 +3,38 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, storeCred, removeCred, parseJsonApi,
+  apiService, storeCred, removeCred, parseJsonApi, parseJsonError,
 } from '../utils';
 
-function* signIn({ payload: { email, password } }) {
+function* signIn({ payload }) {
   try {
     const { data, headers } = yield call(apiService.request, {
       url: '/auth/signin',
       method: 'post',
-      data: { email, password },
+      data: payload,
     });
     storeCred(headers['authorization']);
     yield put(actions.succedSignIn(parseJsonApi(data)));
-  } catch (e) {
-    yield put(actions.failedSignIn('Username or password is incorrect'))
+  } catch (err) {
+    const { response = {} } = err;
+    const { data = {} } = response;
+    yield put(actions.failedSignIn(['Username or password is incorrect']));
   }
 }
 
-function* signUp({ payload: { email, password, type } }) {
+function* signUp({ payload }) {
   try {
     const { data, headers } = yield call(apiService.request, {
       url: '/auth/signup',
       method: 'post',
-      data: { email, password, type },
+      data: payload,
     });
     storeCred(headers['authorization']);
     yield put(actions.succedSignUp(parseJsonApi(data)));
-  } catch (e) {
-    // const { response: { data }} = e;
-    yield put(actions.failedSignUp('Can not register with this Email'))
+  } catch (err) {
+    const { response = {} } = err;
+    const { data = {} } = response;
+    yield put(actions.failedSignUp(parseJsonError(data)));
   }
 }
 
@@ -42,9 +45,10 @@ function* fetchMe() {
       method: 'get',
     });
     yield put(actions.succedFetchMe(parseJsonApi(data)));
-  } catch (e) {
-    console.log('auth error', e)
-    yield put(actions.failedFetchMe('data.errors'))
+  } catch (err) {
+    const { response = {} } = err;
+    const { data = {} } = response;
+    yield put(actions.failedFetchMe(parseJsonError(data)));
     yield put(actions.signOut())
   }
 }

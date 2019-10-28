@@ -27,6 +27,7 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   const [type, setType] = useState('User');
   const [emailInvalid, setEmailInvalid] = useState(false);
   const [pwdNotConfirmed, setPwdNotConfirmed] = useState(false);
+  const [pristine, setPristine] = useState(true);
   const emailSetter = (e) => {
     setEmail(e.target.value);
     setEmailInvalid(!validateEmail(e.target.value))
@@ -42,6 +43,7 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
   const submitHandler = e => {
     e.preventDefault()
     onSubmit({email: email.replace(/\s/g, ''), password, username, type});
+    setPristine(false);
   }
 
   return (
@@ -115,10 +117,6 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
           passwords not match
         </FormHelperText>
       </FormControl>
-      {
-        errors.map(
-          err => <Typography color="error" key={err}>{err}</Typography>)
-      }
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">You are a?</FormLabel>
         <RadioGroup
@@ -131,6 +129,10 @@ const SignUp = ({ classes, onSubmit, loading=false, errors=[] }) => {
           />
         </RadioGroup>
       </FormControl>
+      {
+        !pristine && errors && errors.map(
+          err => <Typography color="error" key={err}>{err}</Typography>)
+      }
       <Button
         disabled={loading || emailInvalid || pwdNotConfirmed}
         type="submit"

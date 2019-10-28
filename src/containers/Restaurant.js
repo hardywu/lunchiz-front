@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Restaurant = ({
-  storeId, restaurant, fetchRestaurant, fetchMyReview, myReview,
+  storeId, restaurant, fetchRestaurant, fetchMyReview, myReview, signOut,
 }) => {
   const classes = useStyles()
   const myReviewId = getMyReviewId(restaurant);

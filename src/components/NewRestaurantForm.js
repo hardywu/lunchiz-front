@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, TextField, FormControl,
+  Button, TextField, FormControl, Typography, CircularProgress,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -12,12 +12,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const NewRestaurantForm = ({onSubmit}) => {
+const NewRestaurantForm = ({onSubmit, errors=[], loading=false}) => {
   const classes = useStyles();
   const [name, setName] = React.useState('');
+  const [pristine, setPristine] = React.useState(true);
   const submitHandler = (e) => {
     e.preventDefault();
     onSubmit && onSubmit({name});
+    setPristine(false);
   }
   return (
     <form className={classes.form} onSubmit={submitHandler}>
@@ -36,7 +38,13 @@ const NewRestaurantForm = ({onSubmit}) => {
         variant="outlined"
       />
       </FormControl>
-      <Button variant="outlined" type="submit">Add Restaurant</Button>
+      {
+        !pristine && errors && errors.map(
+          err => <Typography color="error" key={err}>{err}</Typography>)
+      }
+      <Button disabled={loading} variant="outlined" type="submit">
+        { loading ? <CircularProgress /> : "Add Restaurant" }
+      </Button>
     </form>)
 }
 

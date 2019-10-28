@@ -6,10 +6,11 @@ import NewRestaurantForm from '../components/NewRestaurantForm';
 import { doCreateRestaurant } from '../actions';
 import { globalRecords } from '../utils';
 
-const CreateRestaurant = ({storeId, createRestaurant}) => {
+const CreateRestaurant = ({storeId, createRestaurant, errors, loading}) => {
   return (
     <Container component="main" maxWidth="sm">
-      <NewRestaurantForm onSubmit={createRestaurant} />
+      <NewRestaurantForm onSubmit={createRestaurant}
+        errors={errors} loading={loading} />
     </Container>
     )
 }
@@ -17,6 +18,8 @@ const CreateRestaurant = ({storeId, createRestaurant}) => {
 export default connect((state, { storeId }) => ({
   isAuthed: state.auth.signedIn,
   restaurant: globalRecords[`store_${storeId}`],
+  loading: state.restaurants.createLoading,
+  errors: state.restaurants.createError,
 }), (dispatch, { storeId }) => ({
   createRestaurant: (data) => dispatch(
     doCreateRestaurant({...data, storeId}, () => navigate('/dashboard'))),

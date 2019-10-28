@@ -9,7 +9,7 @@ import ReplyReviewForm from '../components/ReplyReviewForm';
 import Review from '../components/Review';
 
 const ReplyReview = ({
-  review, fetchReview, replyReview, replyLoading,
+  review, fetchReview, replyReview, replyLoading, errors,
 }) => {
   React.useEffect(() => { fetchReview() }, []);
   if (!review) return <CircularProgress />
@@ -18,6 +18,7 @@ const ReplyReview = ({
       reviewer={globalRecords[review.user]}
       review={review}
       loading={replyLoading}
+      errors={errors}
       onSubmit={replyReview}
     />
   );
@@ -26,6 +27,7 @@ const ReplyReview = ({
 
 export default connect((state, { reviewId }) => ({
   review: globalRecords[idToRecordId(reviewId, 'review')],
+  errors: state.reviews.replyError,
   replyLoading: state.reviews.replyLoading,
 }), (dispatch, { reviewId }) => ({
   fetchReview: () => dispatch(doFetchReview(reviewId)),

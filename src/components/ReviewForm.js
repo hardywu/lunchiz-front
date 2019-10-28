@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, Typography, TextField, Box, FormControl,
+  Button, Typography, TextField, Box, FormControl, CircularProgress,
 } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import format from 'date-fns/format';
@@ -32,15 +32,21 @@ const useStyles = makeStyles(theme => ({
 
 const ReviewForm = ({
   onSubmit, rate=3, comment='', reply='', date=format(new Date(), 'yyyy-MM-dd'),
+  errors=[], loading=false,
 }) => {
   const classes = useStyles();
   const [commentField, setComment] = React.useState(comment);
   const [rateField, setRate] = React.useState(rate);
   const [replyField, setReply] = React.useState(reply);
   const [dateField, setDate] = React.useState(date);
+  const [pristine, setPristine] = React.useState(true);
   const submitHandler = (e) => {
     e.preventDefault();
-    onSubmit && onSubmit({rate: rateField, date: dateField, comment: commentField});
+    onSubmit && onSubmit({
+      rate: rateField, date: dateField, comment: commentField,
+      reply: replyField,
+    });
+    setPristine(false);
   }
   return (
     <form className={classes.form} onSubmit={submitHandler}>
@@ -61,6 +67,7 @@ const ReviewForm = ({
         autoFocus
         label="comment"
         placeholder="comment"
+        multiline={true}
         value={commentField}
         onChange={e => setComment(e.target.value)}
         InputLabelProps={{
@@ -75,6 +82,7 @@ const ReviewForm = ({
         name="reply"
         autoFocus
         label="reply"
+        multiline={true}
         placeholder="reply"
         value={replyField}
         onChange={e => setReply(e.target.value)}
@@ -99,7 +107,13 @@ const ReviewForm = ({
         }}
       />
       </FormControl>
-      <Button variant="outlined" type="submit">SAVE</Button>
+      {
+        !pristine && errors && errors.map(
+          err => <Typography color="error" key={err}>{err}</Typography>)
+      }
+      <Button disabled={loading} variant="outlined" type="submit">
+        { loading ? <CircularProgress /> : "SAVE" }
+      </Button>
     </form>)
 }
 

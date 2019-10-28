@@ -15,7 +15,7 @@ const Signup = ({ isAuthed, signUp, signUpError }) => {
         </Link>
       }
     >
-      <SignUpForm onSubmit={signUp} errors={[signUpError]}
+      <SignUpForm onSubmit={signUp} errors={signUpError}
 
       />
     </SignUpPanel>
