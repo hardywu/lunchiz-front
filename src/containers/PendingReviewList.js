@@ -18,7 +18,7 @@ const PendingReviewList = (props) => {
   const { userId, idList, fetchReviewList, replyReview, replyLoading } = props;
   const [replyText, setReplyText] = React.useState('');
   React.useEffect(
-    () => { userId && fetchReviewList({ ownerId: userId, reply: null }) },
+    () => { userId && fetchReviewList({ ownerId: userId, replied: false }) },
     [fetchReviewList, userId])
 
   if (!idList) return <CircularProgress />

@@ -85,9 +85,8 @@ function* deleteReview({ id }) {
 
 function* fetchReviewList({ params }) {
   try {
-    const param = Object.keys(params).includes('reply') ? '?reply' : '';
     const { data } = yield call(apiService.request, {
-      url: '/reviews' + param,
+      url: '/reviews',
       method: 'get',
       params,
     });
