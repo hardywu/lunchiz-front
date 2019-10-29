@@ -109,6 +109,6 @@ context('Register', () => {
 
     // confirm we have logged in successfully
     cy.location('pathname').should('equal', '/register')
-    cy.contains('Can not register with this Email').should('be.visible')
+    cy.contains('taken').should('be.visible')
   })
 })

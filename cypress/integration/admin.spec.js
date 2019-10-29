@@ -58,6 +58,7 @@ context('Admin', () => {
     cy.location('pathname').should('equal', `/admin/users/${user.id}/edit`)
 
     cy.get('[name=email]').clear().type("newEmail@test.io")
+    cy.get('[name=username]').clear().type("newUsername")
     cy.get('[name=password]').type("newPassword")
     cy.get('[name=confirm]').type("newPassword")
     cy.get('[type="radio"][name="type"][value="Admin"]').check()
@@ -66,49 +67,14 @@ context('Admin', () => {
     cy.route('PATCH', '/users/*', { data: user }).as('editUser')
     cy.route('GET', '/users**', this.usersJSON)
     cy.contains('button', 'SAVE').click()
+    cy.wait('@editUser')
+    cy.get('@editUser').then(function (xhr) {
+      const { data: { attributes } = {} } = xhr.requestBody
+      expect(attributes.email).to.equal('newEmail@test.io')
+      expect(attributes.password).to.equal('newPassword')
+      expect(attributes.username).to.equal('newUsername')
+    })
     cy.contains('newEmail@test.io').should('be.visible')
-  })
-
-  it('could not update user with duplicate  email', function() {
-    cy.visit('admin/users')
-
-    const user = this.usersJSON.data[0]
-    cy.contains('tr', user.attributes.email).find('a:contains("edit")').click()
-    cy.location('pathname').should('equal', `/admin/users/${user.id}/edit`)
-
-    cy.get('[name=email]').clear().type("duplicatedEmail@test.io")
-
-    Object.assign(user.attributes, { email: 'newEmail@test.io', role: 'Admin' })
-    const errMsg = 'Email conflicts with existing records'
-    cy.route({
-      method: 'PATCH',
-      url: '/users/*',
-      status: 422,
-      response: { errors: [{ detail: errMsg }]}
-    }).as('editUser')
-    cy.contains('button', 'SAVE').click()
-    cy.contains(errMsg).should('be.visible')
-  })
-
-  it('could not update user with duplicate  username', function() {
-    cy.visit('admin/users')
-
-    const user = this.usersJSON.data[0]
-    cy.contains('tr', user.attributes.email).find('a:contains("edit")').click()
-    cy.location('pathname').should('equal', `/admin/users/${user.id}/edit`)
-
-    cy.get('[name=username]').clear().type("duplicatedUsername")
-
-    Object.assign(user.attributes, { username: 'duplicatedUsername', role: 'Admin' })
-    const errMsg = 'username conflicts with existing records'
-    cy.route({
-      method: 'PATCH',
-      url: '/users/*',
-      status: 422,
-      response: { errors: [{ detail: errMsg }]}
-    }).as('editUser')
-    cy.contains('button', 'SAVE').click()
-    cy.contains(errMsg).should('be.visible')
   })
 
   it('delete review', function () {
@@ -141,9 +107,14 @@ context('Admin', () => {
     cy.route('PATCH', '/reviews/*', { data: review }).as('editReview')
     cy.route('GET', '/reviews**', this.reviewsJSON)
     cy.contains('button', 'SAVE').click()
+    cy.wait('@editReview').then(function (xhr) {
+      const { data: { attributes } = {} } = xhr.requestBody
+      expect(attributes.comment).to.equal('new_updated_comment')
+      expect(attributes.reply).to.equal('new_updated_reply')
+      expect(attributes.date).to.equal('2000-01-18')
+    })
     cy.contains('new_updated_comment').should('be.visible')
   })
-
 
   it('delete restaurant', function () {
     cy.visit('/admin')
@@ -159,18 +130,22 @@ context('Admin', () => {
 
   it('update restaurant', function () {
     cy.visit('/admin')
+    const newName = 'new_store_name'
     const restaurant = this.restaurantsJSON.data[0]
     cy.wait('@rests')
     cy.contains('tr', restaurant.attributes.name).find('a:contains("edit")').click()
     cy.location('pathname').should('equal', `/admin/restaurants/${restaurant.id}/edit`)
 
-    cy.get('[name=name]').clear().type("new_store_name")
+    cy.get('[name=name]').clear().type(newName)
 
-    Object.assign(restaurant.attributes, { name: 'new_store_name'})
+    Object.assign(restaurant.attributes, { name: newName})
     cy.route('PATCH', '/stores/*', { data: restaurant }).as('editRest')
-    cy.contains('button', 'SAVE').click()
     cy.route('GET', '/stores**', this.restaurantsJSON)
-    cy.wait('@editRest')
-    cy.contains('new_store_name').should('be.visible')
+    cy.contains('button', 'SAVE').click()
+    cy.wait('@editRest').then(function (xhr) {
+      const { data: { attributes } = {} } = xhr.requestBody
+      expect(attributes.name).to.equal(newName)
+    })
+    cy.contains(newName).should('be.visible')
   })
 })
