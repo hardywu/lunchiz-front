@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from "@reach/router";
-import Slider from '@material-ui/core/Slider';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
-import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 import { doFetchRestaurantList } from '../actions';
 import { globalRecords } from '../utils';

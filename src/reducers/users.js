@@ -46,7 +46,7 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         deleteLoading: false,
-        idList: state.idList.filter(id => id != action.id),
+        idList: state.idList.filter(id => id !== action.id),
       }
     case DELETE_USER_FAILED:
       return {

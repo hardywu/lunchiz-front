@@ -13,7 +13,6 @@ import { globalRecords } from '../utils';
 import ReviewList from './ReviewList';
 import Navbar from '../components/Navbar';
 import CreateReview from './CreateReview';
-import Review from '../components/Review';
 import MyReview from './MyReview';
 
 const getMyReviewId = rest => rest && rest.canReview && rest.myReviewId
@@ -37,7 +36,6 @@ const Restaurant = ({
   storeId, restaurant, fetchRestaurant, fetchMyReview, myReview, signOut,
 }) => {
   const classes = useStyles()
-  const myReviewId = getMyReviewId(restaurant);
   React.useEffect(() => {
     fetchRestaurant(storeId)
   }, [fetchRestaurant, storeId]);

@@ -4,14 +4,12 @@ import { navigate } from "@reach/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { doFetchReview, doReplyReview } from '../actions';
 import { globalRecords, idToRecordId } from '../utils';
-import { Button, TextField } from '@material-ui/core';
 import ReplyReviewForm from '../components/ReplyReviewForm';
-import Review from '../components/Review';
 
 const ReplyReview = ({
   review, fetchReview, replyReview, replyLoading, errors,
 }) => {
-  React.useEffect(() => { fetchReview() }, []);
+  React.useEffect(() => { fetchReview() }, [fetchReview]);
   if (!review) return <CircularProgress />
   return (
     <ReplyReviewForm

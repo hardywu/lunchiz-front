@@ -16,8 +16,6 @@ function* signIn({ payload }) {
     storeCred(headers['authorization']);
     yield put(actions.succedSignIn(parseJsonApi(data)));
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
     yield put(actions.failedSignIn(['Username or password is incorrect']));
   }
 }

@@ -4,7 +4,7 @@ import {
 import * as actions from '../actions';
 import {
   apiService, parseJsonApi, toJsonApi, globalRecords, idToRecordId,
-  parseJsonError, getErrorData,
+  getErrorData,
 } from '../utils';
 
 function* createReview({ data: rawData, successCB, errorCB }) {
@@ -19,9 +19,7 @@ function* createReview({ data: rawData, successCB, errorCB }) {
     globalRecords[`store_${storeId}`].myReviewId = data.data.id;
     if (successCB) yield call(successCB);
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedCreateReview(parseJsonError(data)));
+    yield put(actions.failedCreateReview(getErrorData(err)));
     if (errorCB) yield call(errorCB);
   }
 }
@@ -33,8 +31,8 @@ function* fetchReview({ id }) {
       method: 'get',
     });
     yield put(actions.succedFetchReview(parseJsonApi(data)));
-  } catch (e) {
-    yield put(actions.failedFetchReview('err'))
+  } catch (err) {
+    yield put(actions.failedFetchReview(getErrorData(err)))
   }
 }
 
@@ -46,9 +44,7 @@ function* fetchMyReview({ id }) {
     });
     yield put(actions.succedFetchMyReview(parseJsonApi(data)));
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedFetchMyReview(parseJsonError(data)));
+    yield put(actions.failedFetchMyReview(getErrorData(err)));
   }
 }
 
@@ -62,16 +58,14 @@ function* replyReview({ id, data: rawData, successCB, errorCB }) {
     yield put(actions.succedReplyReview(parseJsonApi(data)));
     if (successCB) yield call(successCB);
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedReplyReview(parseJsonError(data)));
+    yield put(actions.failedReplyReview(getErrorData(err)));
     if (errorCB) yield call(errorCB);
   }
 }
 
 function* deleteReview({ id }) {
   try {
-    const { data } = yield call(apiService.request, {
+    yield call(apiService.request, {
       url: `/reviews/${id}`,
       method: 'delete',
     });
@@ -105,9 +99,7 @@ function* updateReview({ id, data: rawData, successCB, errorCB }) {
     yield put(actions.succedUpdateReview(parseJsonApi(data)));
     if (successCB) yield call(successCB);
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedUpdateReview(parseJsonError(data)));
+    yield put(actions.failedUpdateReview(getErrorData(err)));
     if (errorCB) yield call(errorCB);
   }
 }
