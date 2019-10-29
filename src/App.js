@@ -8,6 +8,7 @@ import SignUp from './containers/SignUp';
 import Restaurant from './containers/Restaurant';
 import Dashboard from './containers/Dashboard';
 import Admin from './containers/Admin';
+import Snack from './containers/Snack';
 import NotFound from './components/NotFound';
 
 const theme = createMuiTheme({
@@ -45,6 +46,7 @@ function App() {
         <Redirect noThrow from="admin" to="admin/restaurants" />
         <NotFound default />
       </Router>
+      <Snack />
     </ThemeProvider>
   );
 }

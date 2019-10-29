@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, parseJsonApi, toJsonApi, idToRecordId, parseJsonError,
+  apiService, parseJsonApi, toJsonApi, idToRecordId, getErrorData,
 } from '../utils';
 
 function* fetchUser({ id }) {
@@ -41,24 +41,21 @@ function* updateUser({ id, data: rawData, successCB, errorCB }) {
     yield put(actions.succedUpdateUser(parseJsonApi(data)));
     if (successCB) yield call(successCB);
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedUpdateUser(parseJsonError(data)));
+    yield put(actions.failedUpdateUser(getErrorData(err)));
     if (errorCB) yield call(errorCB);
   }
 }
 
 function* deleteUser({ id }) {
   try {
-    const { data } = yield call(apiService.request, {
+    yield call(apiService.request, {
       url: `/users/${id}`,
       method: 'delete',
     });
     yield put(actions.succedDeleteUser(idToRecordId(id, 'user')));
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedDeleteUser(data.errors.map(e => e.detail)));
+    yield put(actions.failedDeleteUser(getErrorData(err)));
+    yield put(actions.showErrMsg(getErrorData(err).join(' ')));
   }
 }
 

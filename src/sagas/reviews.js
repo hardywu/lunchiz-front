@@ -4,7 +4,7 @@ import {
 import * as actions from '../actions';
 import {
   apiService, parseJsonApi, toJsonApi, globalRecords, idToRecordId,
-  parseJsonError,
+  parseJsonError, getErrorData,
 } from '../utils';
 
 function* createReview({ data: rawData, successCB, errorCB }) {
@@ -77,9 +77,8 @@ function* deleteReview({ id }) {
     });
     yield put(actions.succedDeleteReview(idToRecordId(id, 'review')));
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedDeleteReview(parseJsonError(data)));
+    yield put(actions.failedDeleteReview(getErrorData(err)));
+    yield put(actions.showErrMsg(getErrorData(err).join(' ')))
   }
 }
 

@@ -4,6 +4,7 @@ import {
 import * as actions from '../actions';
 import {
   apiService, parseJsonApi, toJsonApi, idToRecordId, parseJsonError,
+  getErrorData,
 } from '../utils';
 
 function* createRestaurant({ data: rawData, successCB, errorCB }) {
@@ -60,9 +61,8 @@ function* deleteRestaurant({ id }) {
     });
     yield put(actions.succedDeleteRestaurant(idToRecordId(id, 'store')));
   } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedDeleteRestaurant(parseJsonError(data)));
+    yield put(actions.failedDeleteRestaurant(getErrorData(err)));
+    yield put(actions.showErrMsg(getErrorData(err).join(' ')))
   }
 }
 
