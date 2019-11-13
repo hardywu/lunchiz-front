@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { JSONAPINormalizer, cachedRecords } from 'restbee/dist/lib/restbee'
+import { JSONAPINormalizer } from 'restbee/dist/lib/restbee'
 
 export const isAuthenticated = () => {
   try {
@@ -12,7 +12,8 @@ export const isAuthenticated = () => {
   }
 }
 
-export const normalizer = new JSONAPINormalizer(cachedRecords)
+export const globalRecords = {}
+export const normalizer = new JSONAPINormalizer(globalRecords)
 export const apiService = axios.create({
   baseURL: process.env.REACT_APP_API_HOST || 'http://localhost:4000',
 });
@@ -45,7 +46,6 @@ export const storeCred = (token) => {
   localStorage.setItem('Authorization', token);
 }
 
-export const globalRecords = cachedRecords
 
 export const delRecord = recId => { delete globalRecords[recId] }
 export const validateEmail = (email) => {

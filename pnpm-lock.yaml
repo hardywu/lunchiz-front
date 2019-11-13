@@ -11,7 +11,7 @@ dependencies:
   react-scripts: 3.2.0
   redux: 4.0.4
   redux-saga: 1.1.1
-  restbee: 1.0.0
+  restbee: 1.0.1
 devDependencies:
   cypress: 3.6.1
 lockfileVersion: 5.1
@@ -10080,14 +10080,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-B/dOmuoAik5bKcD6s6nXDCjzUKnaDvdkRyAk6rsmsKLipWj4797iothd7jmmUhWTfinVMU+wc56rYKsit2Qy4w==
-  /restbee/1.0.0:
-    dependencies:
-      axios: 0.19.0
+  /restbee/1.0.1:
     dev: false
     engines:
       node: '>=6.0.0'
     resolution:
-      integrity: sha512-nk7c0U1BNo+Y9C52vTOQCRV5hqwGzL3JUZpZthVuR/cCgV25FStwZT9sN532MC3W+34kZnb2VuFxJVV8XVgUyQ==
+      integrity: sha512-v89wnJXLGiFC75nMk9xm9NK41dDsTc7s3OoVsk5Mczzcof7w4NtGl657Jl+FvlhysHMBBVRXDZFH9QIEIZSvDg==
   /restore-cursor/1.0.1:
     dependencies:
       exit-hook: 1.1.1
@@ -11963,4 +11961,4 @@ specifiers:
   react-scripts: 3.2.0
   redux: ^4.0.4
   redux-saga: ^1.1.1
-  restbee: ^1.0.0
+  restbee: ^1.0.1
