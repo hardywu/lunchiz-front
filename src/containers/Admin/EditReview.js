@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import ReviewForm from '../../components/ReviewForm';
 import { doFetchReview, doUpdateReview } from '../../actions';
-import { globalRecords, idToRecordId } from '../../utils';
+import { globalRecords, normalizer } from '../../utils';
 
 const EditReview = ({
   fetchReview, reviewId, review, updateReview ,
@@ -26,7 +26,7 @@ const EditReview = ({
 export default connect((state, { reviewId }) => ({
   loading: state.reviews.updateLoading,
   errors: state.reviews.updateError,
-  review: globalRecords[idToRecordId(reviewId, 'review')],
+  review: globalRecords[normalizer.idToRecordId(reviewId, 'review')],
 }), (dispatch, { reviewId }) => ({
   fetchReview: () => dispatch(doFetchReview(reviewId)),
   updateReview: (data) => dispatch(

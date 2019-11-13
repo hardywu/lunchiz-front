@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UserForm from '../../components/UserForm';
 import { doFetchUser, doUpdateUser } from '../../actions';
-import { globalRecords, idToRecordId } from '../../utils';
+import { globalRecords, normalizer } from '../../utils';
 
 const EditUser = ({ fetchUser, userId, user, updateUser, errors }) => {
   React.useEffect(() => { fetchUser() }, [fetchUser]);
@@ -18,7 +18,7 @@ const EditUser = ({ fetchUser, userId, user, updateUser, errors }) => {
 }
 
 export default connect((state, { userId }) => ({
-  user: globalRecords[idToRecordId(userId, 'user')],
+  user: globalRecords[normalizer.idToRecordId(userId, 'user')],
   errors: state.users.updateError,
 }), (dispatch, { userId }) => ({
   fetchUser: () => dispatch(doFetchUser(userId)),

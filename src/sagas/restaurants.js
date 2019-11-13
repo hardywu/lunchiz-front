@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, toJsonApi, idToRecordId,
+  apiService, normalizer,
 } from '../utils';
 
 function* createRestaurant({ data: rawData, successCB, errorCB }) {
@@ -11,7 +11,7 @@ function* createRestaurant({ data: rawData, successCB, errorCB }) {
     const { data } = yield call(apiService.request, {
       url: '/stores',
       method: 'post',
-      data: toJsonApi(rawData),
+      data: normalizer.toJsonApi(rawData),
     });
     yield put(actions.succedCreateRestaurant(data.data));
     if (successCB) yield call(successCB)
@@ -52,7 +52,7 @@ function* deleteRestaurant({ id }) {
       url: `/stores/${id}`,
       method: 'delete',
     });
-    yield put(actions.succedDeleteRestaurant(idToRecordId(id, 'store')));
+    yield put(actions.succedDeleteRestaurant(normalizer.idToRecordId(id, 'store')));
   } catch (errors) {
     yield put(actions.failedDeleteRestaurant(errors));
     yield put(actions.showErrMsg(errors.join(' ')))
@@ -64,7 +64,7 @@ function* updateRestaurant({ id, data: rawData, successCB, errorCB }) {
     const { data } = yield call(apiService.request, {
       url: `/stores/${id}`,
       method: 'patch',
-      data: toJsonApi(rawData),
+      data: normalizer.toJsonApi(rawData),
     });
     yield put(actions.succedUpdateRestaurant(data.data));
     if (successCB) yield call(successCB)

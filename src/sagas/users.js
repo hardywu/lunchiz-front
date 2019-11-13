@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, toJsonApi, idToRecordId,
+  apiService, normalizer,
 } from '../utils';
 
 function* fetchUser({ id }) {
@@ -36,7 +36,7 @@ function* updateUser({ id, data: rawData, successCB, errorCB }) {
     const { data } = yield call(apiService.request, {
       url: `/users/${id}`,
       method: 'patch',
-      data: toJsonApi(rawData),
+      data: normalizer.toJsonApi(rawData),
     });
     yield put(actions.succedUpdateUser(data.data));
     if (successCB) yield call(successCB);
@@ -53,7 +53,7 @@ function* deleteUser({ id }) {
       url: `/users/${id}`,
       method: 'delete',
     });
-    yield put(actions.succedDeleteUser(idToRecordId(id, 'user')));
+    yield put(actions.succedDeleteUser(normalizer.idToRecordId(id, 'user')));
   } catch (errors) {
     yield put(actions.failedDeleteUser(errors));
     yield put(actions.showErrMsg(errors.join(' ')));

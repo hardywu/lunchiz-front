@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import RestaurantForm from '../../components/RestaurantForm';
 import { doFetchRestaurant, doUpdateRestaurant } from '../../actions';
-import { globalRecords, idToRecordId } from '../../utils';
+import { globalRecords, normalizer } from '../../utils';
 
 const EditRestaurant = ({
   fetchRestaurant, restaurantId, restaurant, updateRestaurant, updateLoading,
@@ -22,7 +22,7 @@ const EditRestaurant = ({
 
 export default connect((state, { restaurantId }) => ({
   updateLoading: state.restaurants.updateLoading,
-  restaurant: globalRecords[idToRecordId(restaurantId, 'store')],
+  restaurant: globalRecords[normalizer.idToRecordId(restaurantId, 'store')],
 }), (dispatch, { restaurantId }) => ({
   fetchRestaurant: () => dispatch(doFetchRestaurant(restaurantId)),
   updateRestaurant: (data) => dispatch(

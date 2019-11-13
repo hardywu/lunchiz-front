@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { navigate } from "@reach/router";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { doFetchReview, doReplyReview } from '../actions';
-import { globalRecords, idToRecordId } from '../utils';
+import { globalRecords, normalizer } from '../utils';
 import ReplyReviewForm from '../components/ReplyReviewForm';
 
 const ReplyReview = ({
@@ -24,7 +24,7 @@ const ReplyReview = ({
 
 
 export default connect((state, { reviewId }) => ({
-  review: globalRecords[idToRecordId(reviewId, 'review')],
+  review: globalRecords[normalizer.idToRecordId(reviewId, 'review')],
   errors: state.reviews.replyError,
   replyLoading: state.reviews.replyLoading,
 }), (dispatch, { reviewId }) => ({

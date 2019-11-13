@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, toJsonApi, globalRecords, idToRecordId,
+  apiService, normalizer, globalRecords,
 } from '../utils';
 
 function* createReview({ data: rawData, successCB, errorCB }) {
@@ -11,7 +11,7 @@ function* createReview({ data: rawData, successCB, errorCB }) {
     const { data } = yield call(apiService.request, {
       url: '/reviews',
       method: 'post',
-      data: toJsonApi(rawData),
+      data: normalizer.toJsonApi(rawData),
     });
     const { storeId } = rawData;
     yield put(actions.succedCreateReview(data.data));
@@ -52,7 +52,7 @@ function* replyReview({ id, data: rawData, successCB, errorCB }) {
     const { data } = yield call(apiService.request, {
       url: `/reviews/${id}/reply`,
       method: 'patch',
-      data: toJsonApi(rawData),
+      data: normalizer.toJsonApi(rawData),
     });
     yield put(actions.succedReplyReview(data.data));
     if (successCB) yield call(successCB);
@@ -68,7 +68,7 @@ function* deleteReview({ id }) {
       url: `/reviews/${id}`,
       method: 'delete',
     });
-    yield put(actions.succedDeleteReview(idToRecordId(id, 'review')));
+    yield put(actions.succedDeleteReview(normalizer.idToRecordId(id, 'review')));
   } catch (errors) {
     yield put(actions.failedDeleteReview(errors));
     yield put(actions.showErrMsg(errors.join(' ')))
@@ -93,7 +93,7 @@ function* updateReview({ id, data: rawData, successCB, errorCB }) {
     const { data } = yield call(apiService.request, {
       url: `/reviews/${id}`,
       method: 'patch',
-      data: toJsonApi(rawData),
+      data: normalizer.toJsonApi(rawData),
     });
     yield put(actions.succedUpdateReview(data.data));
     if (successCB) yield call(successCB);
