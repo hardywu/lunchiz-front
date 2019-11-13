@@ -18,6 +18,7 @@ context('Admin', () => {
   it('list restaurants', function () {
     cy.visit('/admin')
     cy.location('pathname').should('equal', '/admin/restaurants')
+    cy.wait('@rests')
     this.restaurantsJSON.data.forEach(rest => {
       cy.contains(rest.attributes.name).should('be.visible')
     })
@@ -27,6 +28,7 @@ context('Admin', () => {
     cy.visit('/admin')
     cy.contains('reviews').click()
     cy.location('pathname').should('equal', '/admin/reviews')
+    cy.wait('@reviews')
     this.reviewsJSON.data.forEach(rev => {
       cy.contains(rev.attributes.comment.slice(0, 4)).should('be.visible')
     })
@@ -36,6 +38,7 @@ context('Admin', () => {
     cy.visit('/admin')
     cy.contains('users').click()
     cy.location('pathname').should('equal', '/admin/users')
+    cy.wait('@users')
     this.usersJSON.data.forEach(user => {
       cy.contains(user.attributes.email).should('be.visible')
     })

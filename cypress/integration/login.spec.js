@@ -4,14 +4,8 @@ context('Authentication', () => {
   beforeEach(() => {
   })
 
-  it('redirect to login for unsigned user', () => {
-    cy.visit('/')
-    cy.location('pathname').should('eq', '/login')
-  })
-
   it('Logs in using UI', () => {
-    cy.visit('/')
-    cy.location('pathname').should('eq', '/login')
+    cy.visit('/login')
     cy.server()
     cy.route('POST', '/auth/signin').as('signin')
 
@@ -36,12 +30,11 @@ context('Authentication', () => {
 
     // now we can log out
     cy.contains('Logout').click()
-    cy.location('pathname').should('equal', '/login')
+    cy.contains('Logout').should('not.exist')
   })
 
   it('Does not log in with invalid password', () => {
-    cy.visit('/')
-    cy.location('pathname').should('equal', '/login')
+    cy.visit('/login')
 
     // enter valid username and password
     cy.get('[name=email]').type(Cypress.env("wrongEmail"))

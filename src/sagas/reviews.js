@@ -3,8 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, parseJsonApi, toJsonApi, globalRecords, idToRecordId,
-  getErrorData,
+  apiService, toJsonApi, globalRecords, idToRecordId,
 } from '../utils';
 
 function* createReview({ data: rawData, successCB, errorCB }) {
@@ -15,11 +14,11 @@ function* createReview({ data: rawData, successCB, errorCB }) {
       data: toJsonApi(rawData),
     });
     const { storeId } = rawData;
-    yield put(actions.succedCreateReview(parseJsonApi(data)));
-    globalRecords[`store_${storeId}`].myReviewId = data.data.id;
+    yield put(actions.succedCreateReview(data.data));
+    globalRecords[`store_${storeId}`].myReviewId = data.data.split('_')[1];
     if (successCB) yield call(successCB);
-  } catch (err) {
-    yield put(actions.failedCreateReview(getErrorData(err)));
+  } catch (errors) {    
+    yield put(actions.failedCreateReview(Array.isArray(errors)? errors : null));
     if (errorCB) yield call(errorCB);
   }
 }
@@ -30,9 +29,9 @@ function* fetchReview({ id }) {
       url: `/reviews/${id}`,
       method: 'get',
     });
-    yield put(actions.succedFetchReview(parseJsonApi(data)));
-  } catch (err) {
-    yield put(actions.failedFetchReview(getErrorData(err)))
+    yield put(actions.succedFetchReview(data.data));
+  } catch (errors) {
+    yield put(actions.failedFetchReview(errors))
   }
 }
 
@@ -42,9 +41,9 @@ function* fetchMyReview({ id }) {
       url: `/reviews/${id}`,
       method: 'get',
     });
-    yield put(actions.succedFetchMyReview(parseJsonApi(data)));
-  } catch (err) {
-    yield put(actions.failedFetchMyReview(getErrorData(err)));
+    yield put(actions.succedFetchMyReview(data.data));
+  } catch (errors) {
+    yield put(actions.failedFetchMyReview(errors));
   }
 }
 
@@ -55,10 +54,10 @@ function* replyReview({ id, data: rawData, successCB, errorCB }) {
       method: 'patch',
       data: toJsonApi(rawData),
     });
-    yield put(actions.succedReplyReview(parseJsonApi(data)));
+    yield put(actions.succedReplyReview(data.data));
     if (successCB) yield call(successCB);
-  } catch (err) {
-    yield put(actions.failedReplyReview(getErrorData(err)));
+  } catch (errors) {
+    yield put(actions.failedReplyReview(errors));
     if (errorCB) yield call(errorCB);
   }
 }
@@ -70,9 +69,9 @@ function* deleteReview({ id }) {
       method: 'delete',
     });
     yield put(actions.succedDeleteReview(idToRecordId(id, 'review')));
-  } catch (err) {
-    yield put(actions.failedDeleteReview(getErrorData(err)));
-    yield put(actions.showErrMsg(getErrorData(err).join(' ')))
+  } catch (errors) {
+    yield put(actions.failedDeleteReview(errors));
+    yield put(actions.showErrMsg(errors.join(' ')))
   }
 }
 
@@ -83,9 +82,9 @@ function* fetchReviewList({ params }) {
       method: 'get',
       params,
     });
-    yield put(actions.succedFetchReviewList(parseJsonApi(data), data.meta));
-  } catch (e) {
-    yield put(actions.failedFetchReviewList('err'))
+    yield put(actions.succedFetchReviewList(data.data, data.meta));
+  } catch (errors) {
+    yield put(actions.failedFetchReviewList(errors))
   }
 }
 
@@ -96,10 +95,10 @@ function* updateReview({ id, data: rawData, successCB, errorCB }) {
       method: 'patch',
       data: toJsonApi(rawData),
     });
-    yield put(actions.succedUpdateReview(parseJsonApi(data)));
+    yield put(actions.succedUpdateReview(data.data));
     if (successCB) yield call(successCB);
-  } catch (err) {
-    yield put(actions.failedUpdateReview(getErrorData(err)));
+  } catch (errors) {
+    yield put(actions.failedUpdateReview(errors));
     if (errorCB) yield call(errorCB);
   }
 }

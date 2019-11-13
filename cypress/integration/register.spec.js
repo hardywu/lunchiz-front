@@ -38,7 +38,7 @@ context('Register', () => {
 
     // now we can log out
     cy.contains('Logout').click()
-    cy.location('pathname').should('equal', '/login')
+    cy.contains('Logout').should('not.exist')
   })
 
   it('Register owner using UI', () => {

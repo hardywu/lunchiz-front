@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Navbar = ({ reviewsPath, dashboardPath, children, signOut }) => {
+const Navbar = ({ reviewsPath, dashboardPath, children, signOut, isAuthed }) => {
   const classes = useStyles();
 
   return (
@@ -31,7 +31,8 @@ const Navbar = ({ reviewsPath, dashboardPath, children, signOut }) => {
         </Typography>
         {reviewsPath && <Link to='/reviews'>reviews</Link>}
         {dashboardPath && <Link to='/dashboard'>dashboard</Link>}
-        <Button color="inherit" onClick={signOut}>Logout</Button>
+        {!isAuthed && <Link to='/login'>Login</Link>}
+        {isAuthed && <Button color="inherit" onClick={signOut}>Logout</Button>}
       </Toolbar>
     </AppBar>
   );

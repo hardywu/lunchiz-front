@@ -71,7 +71,7 @@ const RestaurantList = (props) => {
 }
 
 export default connect(state => ({
-  restaurants: state.restaurants.idList &&
+  restaurants: Array.isArray(state.restaurants.idList) &&
     state.restaurants.idList.map(id => globalRecords[id]),
   total: state.restaurants.listTotal || 0,
 }), (dispatch) => ({

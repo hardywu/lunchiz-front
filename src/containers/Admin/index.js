@@ -30,7 +30,7 @@ const Admin = (props) => {
 
   return (
     <div>
-      <Navbar signOut={signOut}>
+      <Navbar signOut={signOut} isAuthed={isAuthed}>
         <Button component={Link} to='./'>admin</Button>
         <Button component={Link} to='users'>users</Button>
         <Button component={Link} to='reviews'>reviews</Button>

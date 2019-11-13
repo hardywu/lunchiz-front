@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, parseJsonApi, toJsonApi, idToRecordId, getErrorData,
+  apiService, toJsonApi, idToRecordId,
 } from '../utils';
 
 function* fetchUser({ id }) {
@@ -12,9 +12,9 @@ function* fetchUser({ id }) {
       url: `/users/${id}`,
       method: 'get',
     });
-    yield put(actions.succedFetchUser(parseJsonApi(data)));
-  } catch (e) {
-    yield put(actions.failedFetchUser('err'))
+    yield put(actions.succedFetchUser(data.data));
+  } catch (errors) {
+    yield put(actions.failedFetchUser(errors))
   }
 }
 
@@ -25,9 +25,9 @@ function* fetchUserList({ params }) {
       method: 'get',
       params,
     });
-    yield put(actions.succedFetchUserList(parseJsonApi(data), data.meta));
-  } catch (e) {
-    yield put(actions.failedFetchUserList('err'))
+    yield put(actions.succedFetchUserList(data.data, data.meta));
+  } catch (errors) {
+    yield put(actions.failedFetchUserList(errors))
   }
 }
 
@@ -38,10 +38,11 @@ function* updateUser({ id, data: rawData, successCB, errorCB }) {
       method: 'patch',
       data: toJsonApi(rawData),
     });
-    yield put(actions.succedUpdateUser(parseJsonApi(data)));
+    yield put(actions.succedUpdateUser(data.data));
     if (successCB) yield call(successCB);
-  } catch (err) {
-    yield put(actions.failedUpdateUser(getErrorData(err)));
+  } catch (errors) {
+    yield put(actions.failedUpdateUser(errors));
+    yield put(actions.showErrMsg(errors.join(' ')));
     if (errorCB) yield call(errorCB);
   }
 }
@@ -53,9 +54,9 @@ function* deleteUser({ id }) {
       method: 'delete',
     });
     yield put(actions.succedDeleteUser(idToRecordId(id, 'user')));
-  } catch (err) {
-    yield put(actions.failedDeleteUser(getErrorData(err)));
-    yield put(actions.showErrMsg(getErrorData(err).join(' ')));
+  } catch (errors) {
+    yield put(actions.failedDeleteUser(errors));
+    yield put(actions.showErrMsg(errors.join(' ')));
   }
 }
 

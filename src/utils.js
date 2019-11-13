@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { JSONAPINormalizer, cachedRecords } from 'restbee/dist/lib/restbee'
 
 export const isAuthenticated = () => {
   try {
@@ -11,9 +12,25 @@ export const isAuthenticated = () => {
   }
 }
 
+export const normalizer = new JSONAPINormalizer(cachedRecords)
 export const apiService = axios.create({
   baseURL: process.env.REACT_APP_API_HOST || 'http://localhost:4000',
 });
+
+apiService.interceptors.response.use(
+  (resp) => {
+    try {
+      return Object.assign(
+        {}, 
+        resp, 
+        { data: { data: normalizer.parse(resp), meta: resp.data.meta } },
+      )
+    } catch(e) {
+      return resp
+    }    
+  }, 
+  (err) => Promise.reject(normalizer.parseErrors(err)),
+)
 
 apiService.defaults.headers.common['Authorization'] = localStorage
   .getItem('Authorization');
@@ -28,7 +45,7 @@ export const storeCred = (token) => {
   localStorage.setItem('Authorization', token);
 }
 
-export const globalRecords = {};
+export const globalRecords = cachedRecords
 
 export const recordId = record => {
   if (Array.isArray(record)) {

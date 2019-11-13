@@ -15,21 +15,21 @@ import CreateRestaurant from './CreateRestaurant';
 
 const Admin = (props) => {
   const { isAuthed, user, signOut, fetchMe } = props
+  React.useEffect(() => {
+    fetchMe()
+  }, [fetchMe])
+
   if (!isAuthed) {
     return <Redirect noThrow to='/login' />;
   }
 
-  if (!user) {
-    fetchMe();
-    return <CircularProgress />
-  }
-
-  if (user.role === 'User') return <Redirect noThrow to='/' />;
-  if (user.role === 'Admin') return <Redirect noThrow to='/admin' />;
+  if (!user) return <CircularProgress />
+  if (user && user.role === 'User') return <Redirect noThrow to='/' />;
+  if (user && user.role === 'Admin') return <Redirect noThrow to='/admin' />;
 
   return (
     <div>
-      <Navbar signOut={signOut}>
+      <Navbar signOut={signOut} isAuthed={isAuthed}>
         <Button component={Link} to='./'>Home</Button>
         <Button component={Link} to='pendingReviews'>Pending Reviews</Button>
         <Button component={Link} to='createRestaurant'>Add my restaurant</Button>

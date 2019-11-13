@@ -11,18 +11,16 @@ import Container from '@material-ui/core/Container';
 
 const Home = (props) => {
   const { isAuthed, user, signOut, fetchMe } = props
+  React.useEffect(() => {
+    fetchMe()
+  }, [fetchMe])
 
-  if (!user) {
-    fetchMe();
-    return <CircularProgress />
-  }
-
-  if (user.role === 'Owner') return <Redirect noThrow to='/dashboard' />;
-  if (user.role === 'Admin') return <Redirect noThrow to='/admin' />;
+  if (user && user.role === 'Owner') return <Redirect noThrow to='/dashboard' />;
+  if (user && user.role === 'Admin') return <Redirect noThrow to='/admin' />;
 
   return (
     <div>
-      <Navbar signOut={signOut}>
+      <Navbar isAuthed={isAuthed} signOut={signOut}>
         <Link to="/">REVIEW</Link>
       </Navbar>
       <Container component="main" maxWidth="lg">

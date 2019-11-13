@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, storeCred, removeCred, parseJsonApi, parseJsonError,
+  apiService, storeCred, removeCred,
 } from '../utils';
 
 function* signIn({ payload }) {
@@ -14,7 +14,7 @@ function* signIn({ payload }) {
       data: payload,
     });
     storeCred(headers['authorization']);
-    yield put(actions.succedSignIn(parseJsonApi(data)));
+    yield put(actions.succedSignIn(data.data));
   } catch (err) {
     yield put(actions.failedSignIn(['Username or password is incorrect']));
   }
@@ -28,11 +28,9 @@ function* signUp({ payload }) {
       data: payload,
     });
     storeCred(headers['authorization']);
-    yield put(actions.succedSignUp(parseJsonApi(data)));
-  } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedSignUp(parseJsonError(data)));
+    yield put(actions.succedSignUp(data.data));
+  } catch (errors) {
+    yield put(actions.failedSignUp(errors));
   }
 }
 
@@ -42,11 +40,9 @@ function* fetchMe() {
       url: '/auth/me',
       method: 'get',
     });
-    yield put(actions.succedFetchMe(parseJsonApi(data)));
-  } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedFetchMe(parseJsonError(data)));
+    yield put(actions.succedFetchMe(data.data));
+  } catch (errors) {
+    yield put(actions.failedFetchMe(errors));
     yield put(actions.signOut())
   }
 }

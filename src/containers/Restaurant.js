@@ -33,7 +33,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Restaurant = ({
-  storeId, restaurant, fetchRestaurant, fetchMyReview, myReview, signOut,
+  storeId, restaurant, fetchRestaurant, fetchMyReview, myReview, signOut, 
+  isAuthed,
 }) => {
   const classes = useStyles()
   React.useEffect(() => {
@@ -42,7 +43,7 @@ const Restaurant = ({
 
   if (restaurant)  return (
     <div>
-      <Navbar signOut={signOut}>
+      <Navbar signOut={signOut} isAuthed={isAuthed}>
         <Link to="/">REVIEW</Link>
       </Navbar>
       <Container maxWidth="lg" >

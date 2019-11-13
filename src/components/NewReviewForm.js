@@ -68,7 +68,7 @@ const NewReviewForm = ({onSubmit, errors=[], loading=false}) => {
         />
       </FormControl>
       {
-        !pristine && errors && errors.map(
+        !pristine && Array.isArray(errors) && errors.map(
           err => <Typography color="error" key={err}>{err}</Typography>)
       }
       <Button disabled={loading} variant="outlined" type="submit">

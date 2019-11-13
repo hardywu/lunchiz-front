@@ -3,8 +3,7 @@ import {
 } from 'redux-saga/effects'
 import * as actions from '../actions';
 import {
-  apiService, parseJsonApi, toJsonApi, idToRecordId, parseJsonError,
-  getErrorData,
+  apiService, toJsonApi, idToRecordId,
 } from '../utils';
 
 function* createRestaurant({ data: rawData, successCB, errorCB }) {
@@ -14,12 +13,10 @@ function* createRestaurant({ data: rawData, successCB, errorCB }) {
       method: 'post',
       data: toJsonApi(rawData),
     });
-    yield put(actions.succedCreateRestaurant(parseJsonApi(data)));
+    yield put(actions.succedCreateRestaurant(data.data));
     if (successCB) yield call(successCB)
-  } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedCreateRestaurant(parseJsonError(data)));
+  } catch (errors) {
+    yield put(actions.failedCreateRestaurant(errors));
     if (errorCB) yield call(errorCB);
   }
 }
@@ -30,11 +27,9 @@ function* fetchRestaurant({ id }) {
       url: `/stores/${id}`,
       method: 'get',
     });
-    yield put(actions.succedFetchRestaurant(parseJsonApi(data)));
-  } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedFetchRestaurant(parseJsonError(data)));
+    yield put(actions.succedFetchRestaurant(data.data));
+  } catch (errors) {
+    yield put(actions.failedFetchRestaurant(errors));
   }
 }
 
@@ -45,11 +40,9 @@ function* fetchRestaurantList({ params }) {
       method: 'get',
       params,
     });
-    yield put(actions.succedFetchRestaurantList(parseJsonApi(data), data.meta));
-  } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedFetchRestaurantList(parseJsonError(data)));
+    yield put(actions.succedFetchRestaurantList(data.data, data.meta));
+  } catch (errors) {
+    yield put(actions.failedFetchRestaurantList(errors));
   }
 }
 
@@ -60,9 +53,9 @@ function* deleteRestaurant({ id }) {
       method: 'delete',
     });
     yield put(actions.succedDeleteRestaurant(idToRecordId(id, 'store')));
-  } catch (err) {
-    yield put(actions.failedDeleteRestaurant(getErrorData(err)));
-    yield put(actions.showErrMsg(getErrorData(err).join(' ')))
+  } catch (errors) {
+    yield put(actions.failedDeleteRestaurant(errors));
+    yield put(actions.showErrMsg(errors.join(' ')))
   }
 }
 
@@ -73,12 +66,10 @@ function* updateRestaurant({ id, data: rawData, successCB, errorCB }) {
       method: 'patch',
       data: toJsonApi(rawData),
     });
-    yield put(actions.succedUpdateRestaurant(parseJsonApi(data)));
+    yield put(actions.succedUpdateRestaurant(data.data));
     if (successCB) yield call(successCB)
-  } catch (err) {
-    const { response = {} } = err;
-    const { data = {} } = response;
-    yield put(actions.failedUpdateRestaurant(parseJsonError(data)));
+  } catch (errors) {
+    yield put(actions.failedUpdateRestaurant(errors));
     if (errorCB) yield call(errorCB);
   }
 }
